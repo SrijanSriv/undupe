@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Not tracked · undupe</title>
+<style>
+  :root { --bg: #fafaf9; --text: #1c1917; --muted: #6b6560; --accent: #2f5bd3;
+    --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Roboto, sans-serif; --mono: ui-monospace, SFMono-Regular, Menlo, monospace; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --bg: #141312; --text: #edebe9; --muted: #a8a29e; --accent: #8aa8ff; } }
+  body { margin: 0; background: var(--bg); color: var(--text); font: 16px/1.55 var(--sans); }
+  .wrap { max-width: 640px; margin: 0 auto; padding: 96px 16px; }
+  h1 { font-size: 28px; letter-spacing: -0.02em; margin: 0 0 10px; overflow-wrap: anywhere; }
+  code { font-family: var(--mono); }
+  p { color: var(--muted); }
+  a { color: var(--accent); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1 id="h">Looking…</h1>
+  <p id="p"></p>
+  <p><a id="home" href="/">← Back to undupe</a></p>
+</div>
+<script>
+(async function () {
+  // GitHub Pages serves this page for any unknown path. On a project site
+  // (user.github.io/<site-repo>/...) the site lives under the first path segment.
+  const parts = location.pathname.split("/").filter(Boolean);
+  const base = location.hostname.endsWith(".github.io") && parts.length ? `/${parts.shift()}/` : "/";
+  document.getElementById("home").href = base;
+  const [owner, name] = parts;
+  let repos = [];
+  try { repos = await (await fetch(base + "repos.json", { cache: "no-cache" })).json(); } catch (e) {}
+  const wanted = owner && name ? `${owner}/${name}` : null;
+  const hit = wanted && repos.find((r) => r.repo.toLowerCase() === wanted.toLowerCase());
+  if (hit) { location.replace(`${base}${hit.repo}/`); return; }  // e.g. wrong capitalisation
+  document.getElementById("h").textContent = wanted ? `${wanted} isn’t tracked yet` : "Page not found";
+  document.getElementById("p").textContent = wanted
+    ? "undupe only covers a few repositories for now. The home page lists the ones available."
+    : "There’s nothing at this address.";
+})();
+</script>
+</body>
+</html>

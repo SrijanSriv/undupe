@@ -1,0 +1,243 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>undupe</title>
+<meta name="description" content="Find open pull requests that duplicate each other, and check whether someone is already working on something before you start.">
+<style>
+  :root {
+    --bg: #fafaf9; --surface: #ffffff; --text: #1c1917; --muted: #6b6560; --faint: #a8a29e;
+    --border: #e7e5e4; --accent: #2f5bd3; --accent-soft: #eef2fc;
+    --high: #b4361f; --high-soft: #fbece8; --poss: #8a6100; --poss-soft: #fbf3df;
+    --resub: #5b4bb0; --resub-soft: #efedfa; --ok: #2e7d4f;
+    --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Roboto, sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #141312; --surface: #1c1b1a; --text: #edebe9; --muted: #a8a29e; --faint: #6b6560;
+      --border: #2e2c2a; --accent: #8aa8ff; --accent-soft: #1d2438;
+      --high: #ff8e76; --high-soft: #3a1f19; --poss: #f0c35a; --poss-soft: #33290f;
+      --resub: #b3a8ff; --resub-soft: #262240; --ok: #6fcf97;
+    }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--text); font: 15px/1.5 var(--sans); }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  .wrap { max-width: 920px; margin: 0 auto; padding: 32px 16px 64px; }
+  .home { display: inline-block; font-size: 14px; color: var(--muted); margin-bottom: 14px; }
+  header h1 { font-size: 28px; margin: 0 0 4px; letter-spacing: -0.02em; }
+  header p { margin: 0; color: var(--muted); }
+  .updated { font-size: 13px; color: var(--faint); margin-top: 6px; }
+
+  .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin: 28px 0; }
+  .stat { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 14px 16px; }
+  .stat b { display: block; font-size: 26px; font-variant-numeric: tabular-nums; letter-spacing: -0.02em; }
+  .stat span { font-size: 13px; color: var(--muted); }
+  @media (max-width: 640px) { .stats { grid-template-columns: repeat(2, 1fr); } }
+
+  .search { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 18px; margin-bottom: 28px; }
+  .search h2 { font-size: 16px; margin: 0 0 4px; }
+  .search p { margin: 0 0 12px; color: var(--muted); font-size: 14px; }
+  .search input { width: 100%; font: inherit; padding: 10px 12px; border-radius: 8px; border: 1px solid var(--border); background: var(--bg); color: var(--text); }
+  .search input:focus { outline: 2px solid var(--accent); outline-offset: -1px; }
+  .results { margin-top: 10px; }
+  .results .none { color: var(--muted); font-size: 14px; padding: 6px 2px; }
+  .results .more { color: var(--faint); font-size: 13px; padding: 6px 2px; }
+
+  .tabs { display: flex; gap: 4px; border-bottom: 1px solid var(--border); margin-bottom: 16px; }
+  .tabs button { font: inherit; background: none; border: 0; padding: 10px 12px; color: var(--muted); cursor: pointer; border-bottom: 2px solid transparent; margin-bottom: -1px; }
+  .tabs button[aria-selected="true"] { color: var(--text); border-bottom-color: var(--text); font-weight: 600; }
+  .filters { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
+  .chip { font: inherit; font-size: 13px; padding: 5px 11px; border-radius: 999px; border: 1px solid var(--border); background: var(--surface); color: var(--muted); cursor: pointer; }
+  .chip[aria-pressed="true"] { background: var(--text); color: var(--bg); border-color: var(--text); }
+
+  .card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 14px 16px; margin-bottom: 12px; }
+  .card-head { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-bottom: 8px; }
+  .badge { font-size: 12px; font-weight: 600; padding: 2px 8px; border-radius: 6px; }
+  .badge.high { color: var(--high); background: var(--high-soft); }
+  .badge.poss { color: var(--poss); background: var(--poss-soft); }
+  .badge.resub { color: var(--resub); background: var(--resub-soft); }
+  .reasons { font-size: 13px; color: var(--muted); }
+  .pr { display: grid; grid-template-columns: 64px 1fr; gap: 2px 10px; padding: 7px 0; border-top: 1px solid var(--border); }
+  .pr:first-of-type { border-top: 0; }
+  .pr .num { font-family: var(--mono); font-size: 14px; }
+  .pr .title { min-width: 0; overflow-wrap: anywhere; }
+  .pr .meta { grid-column: 2; font-size: 12.5px; color: var(--faint); display: flex; flex-wrap: wrap; gap: 4px 10px; }
+  .tag { font-size: 11.5px; padding: 0 6px; border-radius: 4px; border: 1px solid var(--border); color: var(--muted); }
+  .tag.first { color: var(--ok); border-color: currentColor; }
+  .tag.warn { color: var(--poss); border-color: currentColor; }
+  details { margin-top: 8px; font-size: 13px; color: var(--muted); }
+  details summary { cursor: pointer; }
+  details code { font-family: var(--mono); font-size: 12px; display: block; overflow-wrap: anywhere; }
+  .empty { color: var(--muted); padding: 20px 0; }
+
+  footer { margin-top: 40px; padding-top: 20px; border-top: 1px solid var(--border); font-size: 13px; color: var(--muted); }
+  footer h3 { font-size: 14px; color: var(--text); margin: 0 0 6px; }
+  footer ul { margin: 6px 0 12px; padding-left: 18px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <a class="home" href="../../">← undupe</a>
+    <h1 id="repo-name">Loading…</h1>
+    <p>Open pull requests that look like the same work, and a way to check before you start. <a id="repo-link" href="#">View on GitHub →</a></p>
+    <div class="updated" id="updated">Loading…</div>
+  </header>
+
+  <section class="stats" id="stats" aria-label="Summary"></section>
+
+  <section class="search">
+    <h2>Is anyone already working on this?</h2>
+    <p>Search open PRs by issue number, keyword, file path, or author before you start.</p>
+    <input id="q" type="search" placeholder="e.g. #1843, perl, copilot, extract_php.py" autocomplete="off">
+    <div class="results" id="results"></div>
+  </section>
+
+  <nav class="tabs" role="tablist">
+    <button role="tab" data-tab="groups" aria-selected="true">Duplicate groups</button>
+    <button role="tab" data-tab="issues" aria-selected="false">Issues with competing PRs</button>
+  </nav>
+
+  <div id="groups-view">
+    <div class="filters" id="filters">
+      <button class="chip" data-f="high" aria-pressed="true">Likely duplicates</button>
+      <button class="chip" data-f="poss" aria-pressed="false">Possible</button>
+      <button class="chip" data-f="all" aria-pressed="false">All</button>
+    </div>
+    <div id="groups"></div>
+  </div>
+  <div id="issues-view" hidden><div id="issues"></div></div>
+
+  <footer>
+    <h3>How this works</h3>
+    Two open PRs are matched when:
+    <ul>
+      <li><b>they say they fix the same issue</b> ("Fixes #N"), and their titles or files also agree;</li>
+      <li><b>their titles are nearly identical</b>; or</li>
+      <li><b>they change the same uncommon files.</b> Files most PRs touch (README, core modules) count for little.</li>
+    </ul>
+    PRs naming different languages (e.g. PHP vs Scala) are not matched on files alone, since they edit the same extractor files but do different work.
+    “Same author” groups are one person submitting twice, not two people duplicating effort.
+    <p><b>This is a heuristic, not a verdict.</b> Matches come from titles, descriptions and file lists, not from reading the code. Always check before closing anything. Not affiliated with the repo’s maintainers.</p>
+  </footer>
+</div>
+
+<script>
+(async function () {
+  const $ = (id) => document.getElementById(id);
+  const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+
+  let data;
+  try {
+    data = await (await fetch("data.json", { cache: "no-cache" })).json();
+  } catch (e) {
+    $("updated").textContent = "Could not load data.json.";
+    return;
+  }
+  const { repo, prs, groups, contested, stats, base } = data;
+  const url = (n) => `https://github.com/${repo}/pull/${n}`;
+  const issueUrl = (n) => `https://github.com/${repo}/issues/${n}`;
+
+  document.title = `${repo} · undupe`;
+  $("repo-name").textContent = repo;
+  $("repo-link").href = `https://github.com/${repo}/pulls`;
+  $("updated").textContent = `Data from ${new Date(data.generated).toLocaleString(undefined, { dateStyle: "medium", timeStyle: "short" })} · ${stats.open} open PRs · current base branch: ${base}`;
+
+  $("stats").innerHTML = [
+    [stats.highGroups, "groups of likely duplicates"],
+    [stats.extraHigh, "extra PRs in those groups"],
+    [stats.contested, "issues with 2+ open PRs"],
+    [stats.groups - stats.highGroups, "more possible groups"],
+  ].map(([n, l]) => `<div class="stat"><b>${n}</b><span>${l}</span></div>`).join("");
+
+  function prRow(n, { first = false } = {}) {
+    const p = prs[n];
+    if (!p) return "";
+    const tags = [];
+    if (first) tags.push(`<span class="tag first">opened first</span>`);
+    if (p.d) tags.push(`<span class="tag">draft</span>`);
+    if (p.b !== base) tags.push(`<span class="tag warn">targets ${esc(p.b)}</span>`);
+    return `<div class="pr">
+      <a class="num" href="${url(n)}" target="_blank" rel="noopener">#${n}</a>
+      <div class="title">${esc(p.t)}</div>
+      <div class="meta"><span>@${esc(p.a)}</span><span>opened ${p.c}</span>${tags.join("")}</div>
+    </div>`;
+  }
+
+  // ── Groups ────────────────────────────────────────────────
+  let filter = "high";
+  function renderGroups() {
+    const list = groups.filter((g) => filter === "all" || (filter === "high") === g.high);
+    if (!list.length) { $("groups").innerHTML = `<div class="empty">No groups in this view.</div>`; return; }
+    $("groups").innerHTML = list.map((g) => {
+      const reasons = [...new Set(g.pairs.flatMap((p) => p.reasons.map((r) => r.replace(/ \(\d+% weighted overlap\)/, ""))))];
+      const shared = [...new Set(g.pairs.flatMap((p) => p.shared))];
+      return `<article class="card">
+        <div class="card-head">
+          <span class="badge ${g.high ? "high" : "poss"}">${g.high ? "Likely duplicate" : "Possible overlap"}</span>
+          ${g.resubmit ? `<span class="badge resub">Same author</span>` : ""}
+          <span class="reasons">${esc(reasons.join(" · "))}</span>
+        </div>
+        ${g.prs.map((n, i) => prRow(n, { first: i === 0 })).join("")}
+        ${shared.length ? `<details><summary>Shared files (${shared.length})</summary>${shared.map((f) => `<code>${esc(f)}</code>`).join("")}</details>` : ""}
+      </article>`;
+    }).join("");
+  }
+  $("filters").addEventListener("click", (e) => {
+    const b = e.target.closest(".chip"); if (!b) return;
+    filter = b.dataset.f;
+    for (const c of $("filters").children) c.setAttribute("aria-pressed", c === b);
+    renderGroups();
+  });
+
+  // ── Issues ────────────────────────────────────────────────
+  $("issues").innerHTML = contested.length ? contested.map((c) => `<article class="card">
+      <div class="card-head"><a href="${issueUrl(c.issue)}" target="_blank" rel="noopener"><b>Issue #${c.issue}</b></a>
+      <span class="reasons">${c.prs.length} open PRs say they fix it</span></div>
+      ${c.prs.slice().sort((a, b) => prs[a].c.localeCompare(prs[b].c)).map((n, i) => prRow(n, { first: i === 0 })).join("")}
+    </article>`).join("") : `<div class="empty">No issue has more than one open PR.</div>`;
+
+  // ── Tabs ──────────────────────────────────────────────────
+  document.querySelector(".tabs").addEventListener("click", (e) => {
+    const b = e.target.closest("button"); if (!b) return;
+    for (const t of document.querySelectorAll(".tabs button")) t.setAttribute("aria-selected", t === b);
+    $("groups-view").hidden = b.dataset.tab !== "groups";
+    $("issues-view").hidden = b.dataset.tab !== "issues";
+  });
+
+  // ── Search ────────────────────────────────────────────────
+  const index = Object.entries(prs).map(([n, p]) => ({
+    n: +n, p,
+    hay: [n, "#" + n, p.t, p.a, ...p.i.map((i) => "#" + i), ...p.f].join("\n").toLowerCase(),
+  }));
+  function search(q) {
+    q = q.trim().toLowerCase();
+    if (!q) { $("results").innerHTML = ""; return; }
+    const issue = q.match(/^#?(\d+)$/);
+    let hits;
+    if (issue) {
+      const n = issue[1];
+      hits = index.filter((x) => x.p.i.includes(n) || String(x.n) === n);
+    } else {
+      const terms = q.split(/\s+/);
+      hits = index.filter((x) => terms.every((t) => x.hay.includes(t)))
+        .map((x) => ({ ...x, s: terms.reduce((s, t) => s + (x.p.t.toLowerCase().includes(t) ? 2 : 1), 0) }))
+        .sort((a, b) => b.s - a.s || b.n - a.n);
+    }
+    const shown = hits.slice(0, 25);
+    $("results").innerHTML = shown.length
+      ? shown.map((x) => prRow(x.n)).join("") + (hits.length > shown.length ? `<div class="more">+ ${hits.length - shown.length} more, narrow your search</div>` : "")
+      : `<div class="none">No open PR matches. Looks free${issue ? `, but check <a href="${issueUrl(issue[1])}" target="_blank" rel="noopener">issue #${issue[1]}</a> for comments too` : ""}.</div>`;
+  }
+  let t;
+  $("q").addEventListener("input", (e) => { clearTimeout(t); t = setTimeout(() => search(e.target.value), 120); });
+
+  renderGroups();
+})();
+</script>
+</body>
+</html>
