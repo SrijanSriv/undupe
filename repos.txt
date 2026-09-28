@@ -1,2 +1,15 @@
 # Repos undupe tracks, one owner/name per line.
 Graphify-Labs/graphify
+oven-sh/bun
+godotengine/godot
+ollama/ollama
+excalidraw/excalidraw
+shadcn-ui/ui
+supabase/supabase
+zed-industries/zed
+n8n-io/n8n
+payloadcms/payload
+drizzle-team/drizzle-orm
+bevyengine/bevy
+run-llama/llama_index
+helix-editor/helix
