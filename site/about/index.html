@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>About · undupe</title>
+<meta name="description" content="What undupe is, how it finds duplicate pull requests, and what its numbers mean.">
+<style>
+  :root {
+    --bg: #fafaf9; --surface: #ffffff; --text: #1c1917; --muted: #6b6560; --faint: #a8a29e;
+    --border: #e7e5e4; --accent: #2f5bd3; --ok: #2e7d4f;
+    --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Roboto, sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #141312; --surface: #1c1b1a; --text: #edebe9; --muted: #a8a29e; --faint: #6b6560;
+      --border: #2e2c2a; --accent: #8aa8ff; --ok: #6fcf97;
+    }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--text); font: 16px/1.6 var(--sans); }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  .wrap { max-width: 720px; margin: 0 auto; padding: 24px 16px 64px; }
+  .home { font-size: 14px; color: var(--muted); }
+  h1 { font-size: clamp(30px, 5vw, 42px); letter-spacing: -0.03em; line-height: 1.1; margin: 36px 0 12px; }
+  .lede { font-size: 18px; color: var(--muted); margin: 0 0 8px; }
+  h2 { font-size: 21px; letter-spacing: -0.015em; margin: 44px 0 10px; }
+  p { margin: 0 0 12px; }
+  .muted { color: var(--muted); }
+  ol.steps { list-style: none; padding: 0; margin: 16px 0 0; counter-reset: step; }
+  ol.steps > li { counter-increment: step; position: relative; padding: 0 0 18px 44px; }
+  ol.steps > li::before { content: counter(step); position: absolute; left: 0; top: 1px; width: 28px; height: 28px; border-radius: 50%; border: 1px solid var(--border); background: var(--surface); display: grid; place-items: center; font: 600 13px var(--mono); color: var(--muted); }
+  ol.steps > li > b { display: block; }
+  ol.steps span { color: var(--muted); }
+  ol.steps ul { margin-top: 8px; }
+  ul { padding-left: 20px; margin: 8px 0 12px; }
+  li { margin-bottom: 6px; }
+  dl { margin: 12px 0 0; display: grid; gap: 12px; }
+  dl div { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 12px 14px; }
+  dt { font-weight: 600; }
+  dd { margin: 2px 0 0; color: var(--muted); }
+  .check { color: var(--ok); font-weight: 600; }
+  code { font-family: var(--mono); font-size: 0.9em; }
+  footer { margin-top: 48px; padding-top: 20px; border-top: 1px solid var(--border); font-size: 14px; color: var(--muted); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <a class="home" href="../">← undupe</a>
+
+  <h1>About undupe</h1>
+  <p class="lede">undupe finds pull requests on busy GitHub repos that do the same work, so maintainers can close the extras and contributors can check before they start.</p>
+
+  <h2>Why it exists</h2>
+  <p>On popular open-source projects, people often fix the same bug or build the same feature without knowing someone else already has. If five people open a PR for one fix, four of them wasted their time, and a maintainer still has to read all five.</p>
+  <p>It usually isn’t carelessness. The second PR tends to arrive within days of the first: there’s just nowhere to see that the work is already in progress. undupe is that place.</p>
+
+  <h2>How it works</h2>
+  <ol class="steps">
+    <li><b>Read every pull request, once a day.</b><span>For each tracked repo, undupe downloads all open pull requests and recently closed ones from GitHub: their titles, descriptions, linked issues and the list of files each one changes.</span></li>
+    <li><b>Compare every pair of open PRs.</b><span>Two PRs are matched if any of these is true:</span>
+      <ul>
+        <li><span>they say they fix the same issue (“Fixes #123”), and their titles or files also look alike;</span></li>
+        <li><span>their titles use mostly the same words (rare words like “Perl” count for more than common ones like “fix”);</span></li>
+        <li><span>they change mostly the same files (files almost every PR touches, like README, count for very little); or</span></li>
+        <li><span>they both touch a file almost no other PR does, and share an unusual word in their titles, like two separate PRs both adding <code>perl.py</code>.</span></li>
+      </ul>
+    </li>
+    <li><b>Group the matches.</b><span>PRs that match are put in one group, oldest first. Strong matches are shown as “likely”, weaker ones as “possible”.</span></li>
+    <li><b>Look for work that’s already done.</b><span>Each open PR is also compared with closed PRs the same way. Many maintainers ship a PR’s code in another commit and then close it, so a closed PR doesn’t mean the work was rejected; an open PR matching it may simply no longer be needed.</span></li>
+    <li><b>Check the matches by hand.</b><span>Someone reads the PRs in each group and marks it as a real duplicate or not. Confirmed groups get a <span class="check">✓ Checked</span> badge (hover it to see who checked and how). Rejected matches disappear from the site.</span></li>
+    <li><b>Let anyone correct it.</b><span>Every group has “Not a duplicate?” and “Confirm” links that open a pre-filled issue, so mistakes get fixed.</span></li>
+  </ol>
+
+  <h2>What the numbers mean</h2>
+  <dl>
+    <div><dt>Groups of likely duplicates</dt><dd>Sets of open PRs that appear to do the same work.</dd></div>
+    <div><dt>Extra PRs</dt><dd>In each group, every PR after the first. If three PRs do one job, two are extra.</dd></div>
+    <div><dt>Issues with 2+ open PRs</dt><dd>Issues that more than one open PR says it fixes.</dd></div>
+    <div><dt>Open PRs that redo closed work</dt><dd>Open PRs that look like a PR that has already been closed or merged.</dd></div>
+  </dl>
+
+  <h2>What it can’t do</h2>
+  <ul>
+    <li>It reads titles, descriptions and file lists, not the code itself. Two PRs editing the same file can still do different things.</li>
+    <li>Matches are leads to check, not verdicts. Only groups marked <span class="check">✓ Checked</span> have been read by someone.</li>
+    <li>It never comments on, labels or closes anything. It only reads public data.</li>
+  </ul>
+
+  <h2>The project</h2>
+  <p>undupe is open source: <a href="https://github.com/SrijanSriv/undupe">github.com/SrijanSriv/undupe</a>. Everything that produces these pages is there, including the matching rules and every checked verdict (<a href="https://github.com/SrijanSriv/undupe/blob/main/verdicts.json">verdicts.json</a>).</p>
+  <p>Want another repository tracked, or spotted a mistake? <a href="https://github.com/SrijanSriv/undupe/issues/new">Open an issue</a>.</p>
+
+  <footer>undupe is an independent project and is not affiliated with the repositories it tracks.</footer>
+</div>
+</body>
+</html>

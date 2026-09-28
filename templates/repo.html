@@ -166,7 +166,11 @@
   $("repo-name").textContent = repo;
   $("repo-link").href = `https://github.com/${repo}/pulls`;
   const checkedNote = stats.confirmed ? ` · ${stats.confirmed} group${stats.confirmed === 1 ? "" : "s"} checked` : "";
-  $("updated").textContent = `Data from ${new Date(data.generated).toLocaleString(undefined, { dateStyle: "medium", timeStyle: "short" })} · ${stats.open} open PRs · current base branch: ${base}${checkedNote}`;
+  $("updated").textContent = `Data from ${new Date(data.generated).toLocaleString(undefined, { dateStyle: "medium", timeStyle: "short" })} · ${stats.open} open PRs · current base branch: ${base}${checkedNote} · `;
+  const about = document.createElement("a");
+  about.href = "../../about/";
+  about.textContent = "How did we get here?";
+  $("updated").append(about);
 
   $("stats").innerHTML = [
     [stats.highGroups, "groups of likely duplicates"],
