@@ -14,6 +14,10 @@ Signals, strongest first:
   3. They change the same *uncommon* files. Each file is weighted by how few
      PRs touch it, so hot files like README.md or extract.py count for little.
 
+  4. They share a very rare file (e.g. both create extractors/perl.py) and a
+     rare title word ("perl"). Catches "add language X" PRs that also touch
+     many other files, which dilutes signal 3.
+
 PRs whose titles name different languages (php vs scala) are never paired on
 files alone: they edit the same extractor files but do different work.
 """
@@ -22,6 +26,7 @@ import collections
 import itertools
 import json
 import math
+import os
 import re
 import shutil
 import sys
@@ -42,6 +47,11 @@ FILE_MIN = 0.4       # file similarity needed for a file-based match...
 FILE_TITLE_MIN = 0.2  # ...together with at least this much title similarity
 ISSUE_FILE_MIN = 0.2   # a shared issue is high confidence only with this much file overlap...
 ISSUE_TITLE_MIN = 0.15  # ...or this much title overlap
+RARE_FILE_MAX = 3     # a file touched by at most this many PRs is "very rare"...
+RARE_WORD_MAX = 10    # ...and a title word used by at most this many PRs is "rare"
+# Where "wrong match" reports go. In the GitHub workflow this is the repo it runs in.
+UNDUPE_REPO = os.environ.get("GITHUB_REPOSITORY", "SrijanSriv/undupe")
+GENERIC_FILES = (".lock", ".toml", ".md", ".txt", ".cfg")  # rare by chance, not by meaning
 
 
 def words(title: str) -> set[str]:
@@ -85,7 +95,12 @@ def build(repo: str) -> dict:
         different_lang = a["L"] and b["L"] and not (a["L"] & b["L"])
         same_author = a["author"] and b["author"] and a["author"].get("login") == b["author"].get("login")
         file_match = fs >= FILE_MIN and ts >= FILE_TITLE_MIN and not different_lang
-        if not (same_issue or ts >= HIGH_TITLE or file_match):
+        # Same-author pairs are skipped here: one person's series of PRs on a
+        # feature shares its test files and topic word by design.
+        rare_files = [f for f in a["F"] & b["F"] if file_df[f] <= RARE_FILE_MAX and not f.endswith(GENERIC_FILES)]
+        rare_words = [w for w in a["W"] & b["W"] if word_df[w] <= RARE_WORD_MAX]
+        rare_match = bool(rare_files and rare_words) and not different_lang and not same_author
+        if not (same_issue or ts >= HIGH_TITLE or file_match or rare_match):
             continue
         # A shared issue alone is not proof: big issues get split into parts,
         # so it only counts as high confidence when titles or files also agree.
@@ -99,6 +114,8 @@ def build(repo: str) -> dict:
         shared = sorted(a["F"] & b["F"], key=lambda f: file_df[f])
         if fs >= FILE_MIN:
             reasons.append(f"Change the same uncommon files ({round(fs * 100)}% weighted overlap)")
+        elif rare_match:
+            reasons.append(f"Both touch {sorted(rare_files)[0]}, which almost no other PR does")
         pairs.append({
             "a": a["number"], "b": b["number"],
             "high": bool(same_issue) and corroborated or ts >= HIGH_TITLE,
@@ -158,6 +175,7 @@ def build(repo: str) -> dict:
     high = [g for g in groups if g["high"]]
     out = {
         "repo": raw["repo"],
+        "undupeRepo": UNDUPE_REPO,
         "generated": datetime.now(timezone.utc).isoformat(timespec="minutes"),
         "base": base,
         "stats": {
