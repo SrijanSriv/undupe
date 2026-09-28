@@ -1,0 +1,976 @@
+{
+ "Graphify-Labs/graphify": {
+  "1068-1125": {
+   "by": "claude (read titles and PR descriptions, not full diffs)",
+   "date": "2026-09-28",
+   "note": "already done in a closed PR",
+   "prs": [
+    1068,
+    1125
+   ],
+   "verdict": "duplicate"
+  },
+  "1134-2160": {
+   "by": "claude (read titles and PR descriptions, not full diffs)",
+   "date": "2026-09-28",
+   "note": "",
+   "prs": [
+    1134,
+    2160
+   ],
+   "verdict": "duplicate"
+  },
+  "1185-2371": {
+   "by": "claude (read titles and PR descriptions, not full diffs)",
+   "date": "2026-09-28",
+   "note": "",
+   "prs": [
+    1185,
+    2371
+   ],
+   "verdict": "not-duplicate"
+  },
+  "1242-3750": {
+   "by": "claude (read titles and PR descriptions, not full diffs)",
+   "date": "2026-09-28",
+   "note": "",
+   "prs": [
+    1242,
+    1929,
+    3750
+   ],
+   "verdict": "duplicate"
+  },
+  "1333-1541": {
+   "by": "claude (read titles and PR descriptions, not full diffs)",
+   "date": "2026-09-28",
+   "note": "already done in a closed PR",
+   "prs": [
+    1333,
+    1541
+   ],
+   "verdict": "duplicate"
+  },
+  "1367-1874": {
+   "by": "claude (read titles and PR descriptions, not full diffs)",
+   "date": "2026-09-28",
+   "note": "",
+   "prs": [
+    707,
+    1367,
+    1874
+   ],
+   "verdict": "duplicate"
+  },
+  "1549-2317": {
+   "by": "claude (read titles and PR descriptions, not full diffs)",
+   "date": "2026-09-28",
+   "note": "",
+   "prs": [
+    1549,
+    2317
+   ],
+   "verdict": "not-duplicate"
+  },
+  "167-292": {
+   "by": "claude (read titles and PR descriptions, not full diffs)",
+   "date": "2026-09-28",
+   "note": "already done in a closed PR",
+   "prs": [
+    167,
+    292
+   ],
+   "verdict": "duplicate"
+  },
+  "167-3651": {
+   "by": "claude (read titles and PR descriptions, not full diffs)",
+   "date": "2026-09-28",
+   "note": "",
+   "prs": [
+    167,
+    406,
+    3651
+   ],
+   "verdict": "duplicate"
+  },
+  "167-406": {
+   "by": "claude (read titles and PR descriptions, not full diffs)",
+   "date": "2026-09-28",
+   "note": "",
+   "prs": [
+    167,
+    406,
+    3651
+   ],
+   "verdict": "duplicate"
+  },
+  "1788-3013": {
+   "by": "claude (read titles and PR descriptions, not full diffs)",
+   "date": "2026-09-28",
+   "note": "#3013 is a slice of #1788 (same author); #3783 is an independent Perl extractor",
+   "prs": [
+    1788,
+    3013,
+    3783
+   ],
+   "verdict": "duplicate"
+  },
+  "1788-3783": {
+   "by": "claude (read titles and PR descriptions, not full diffs)",
+   "date": "2026-09-28",
+   "note": "#3013 is a slice of #1788 (same author); #3783 is an independent Perl extractor",
+   "prs": [
+    1788,
+    3013,
+    3783
+   ],
+   "verdict": "duplicate"
+  },
+  "1813-2912": {
+   "by": "claude (read titles and PR descriptions, not full diffs)",
+   "date": "2026-09-28",
+   "note": "#1813 only does the error-message half; #2912 and #2968 are full alternatives",
+   "prs": [
+    1813,
+    2912,
+    2968
+   ],
+   "verdict": "duplicate"
+  },
+  "1827-1848": {
+   "by": "claude (read titles and PR descriptions, not full diffs)",
+   "date": "2026-09-28",
+   "note": "",
+   "prs": [
+    1827,
+    1848
+   ],
+   "verdict": "duplicate"
+  },
+  "1842-2715": {
+   "by": "claude (read titles and PR descriptions, not full diffs)",
+   "date": "2026-09-28",
+   "note": "#1842 adds a read_source MCP tool; #2715 flags MCP errors",
+   "prs": [
+    1842,
+    2715
+   ],
+   "verdict": "not-duplicate"
+  },
+  "1842-3273": {
+   "by": "claude (read titles and PR descriptions, not full diffs)",
+   "date": "2026-09-28",
+   "note": "",
+   "prs": [
+    1842,
+    3273
+   ],
+   "verdict": "not-duplicate"
+  },
+  "1845-1877": {
+   "by": "claude (read titles and PR descriptions, not full diffs)",
+   "date": "2026-09-28",
+   "note": "",
+   "prs": [
+    1845,
+    1877,
+    3634
+   ],
+   "verdict": "duplicate"
+  },
+  "1845-1936": {
+   "by": "claude (read titles and PR descriptions, not full diffs)",
+   "date": "2026-09-28",
+   "note": "already done in a closed PR",
+   "prs": [
+    1845,
+    1936
+   ],
+   "verdict": "duplicate"
+  },
+  "1845-3634": {
+   "by": "claude (read titles and PR descriptions, not full diffs)",
+   "date": "2026-09-28",
+   "note": "",
+   "prs": [
+    1845,
+    1877,
+    3634
+   ],
+   "verdict": "duplicate"
+  },
+  "1866-1878": {
+   "by": "claude (read titles and PR descriptions, not full diffs)",
+   "date": "2026-09-28",
+   "note": "already done in a closed PR",
+   "prs": [
+    1866,
+    1878
+   ],
+   "verdict": "duplicate"
+  },
+  "1874-3716": {
+   "by": "claude (read titles and PR descriptions, not full diffs)",
+   "date": "2026-09-28",
+   "note": "already done in a closed PR",
+   "prs": [
+    1874,
+    3716
+   ],
+   "verdict": "duplicate"
+  },
+  "1877-1936": {
+   "by": "claude (read titles and PR descriptions, not full diffs)",
+   "date": "2026-09-28",
+   "note": "already done in a closed PR",
+   "prs": [
+    1877,
+    1936
+   ],
+   "verdict": "duplicate"
+  },
+  "1877-3634": {
+   "by": "claude (read titles and PR descriptions, not full diffs)",
+   "date": "2026-09-28",
+   "note": "",
+   "prs": [
+    1845,
+    1877,
+    3634
+   ],
+   "verdict": "duplicate"
+  },
+  "192-1439": {
+   "by": "claude (read titles and PR descriptions, not full diffs)",
+   "date": "2026-09-28",
+   "note": "",
+   "prs": [
+    192,
+    1439
+   ],
+   "verdict": "duplicate"
+  },
+  "1929-3750": {
+   "by": "claude (read titles and PR descriptions, not full diffs)",
+   "date": "2026-09-28",
+   "note": "",
+   "prs": [
+    1242,
+    1929,
+    3750
+   ],
+   "verdict": "duplicate"
+  },
+  "1936-3634": {
+   "by": "claude (read titles and PR descriptions, not full diffs)",
+   "date": "2026-09-28",
+   "note": "already done in a closed PR",
+   "prs": [
+    3634,
+    1936
+   ],
+   "verdict": "duplicate"
+  },
+  "1966-2019": {
+   "by": "claude (read titles and PR descriptions, not full diffs)",
+   "date": "2026-09-28",
+   "note": "already done in a closed PR",
+   "prs": [
+    1966,
+    2019
+   ],
+   "verdict": "duplicate"
+  },
+  "1993-2131": {
+   "by": "claude (read titles and PR descriptions, not full diffs)",
+   "date": "2026-09-28",
+   "note": "",
+   "prs": [
+    1993,
+    2131
+   ],
+   "verdict": "duplicate"
+  },
+  "2001-2240": {
+   "by": "claude (read titles and PR descriptions, not full diffs)",
+   "date": "2026-09-28",
+   "note": "#2240 also adds SCSS",
+   "prs": [
+    2001,
+    2240
+   ],
+   "verdict": "duplicate"
+  },
+  "2013-2275": {
+   "by": "claude (read titles and PR descriptions, not full diffs)",
+   "date": "2026-09-28",
+   "note": "",
+   "prs": [
+    2013,
+    2275
+   ],
+   "verdict": "duplicate"
+  },
+  "2064-3635": {
+   "by": "claude (read titles and PR descriptions, not full diffs)",
+   "date": "2026-09-28",
+   "note": "",
+   "prs": [
+    2064,
+    3635
+   ],
+   "verdict": "duplicate"
+  },
+  "2117-2373": {
+   "by": "claude (read titles and PR descriptions, not full diffs)",
+   "date": "2026-09-28",
+   "note": "",
+   "prs": [
+    2117,
+    2373
+   ],
+   "verdict": "duplicate"
+  },
+  "214-574": {
+   "by": "claude (read titles and PR descriptions, not full diffs)",
+   "date": "2026-09-28",
+   "note": "",
+   "prs": [
+    214,
+    574
+   ],
+   "verdict": "duplicate"
+  },
+  "2146-2150": {
+   "by": "claude (read titles and PR descriptions, not full diffs)",
+   "date": "2026-09-28",
+   "note": "",
+   "prs": [
+    2146,
+    2150
+   ],
+   "verdict": "duplicate"
+  },
+  "2203-3767": {
+   "by": "claude (read titles and PR descriptions, not full diffs)",
+   "date": "2026-09-28",
+   "note": "",
+   "prs": [
+    816,
+    2203,
+    3767
+   ],
+   "verdict": "duplicate"
+  },
+  "2294-3288": {
+   "by": "claude (read titles and PR descriptions, not full diffs)",
+   "date": "2026-09-28",
+   "note": "already done in a closed PR",
+   "prs": [
+    2294,
+    3288
+   ],
+   "verdict": "duplicate"
+  },
+  "231-233": {
+   "by": "claude (read titles and PR descriptions, not full diffs)",
+   "date": "2026-09-28",
+   "note": "",
+   "prs": [
+    231,
+    233
+   ],
+   "verdict": "not-duplicate"
+  },
+  "2322-3710": {
+   "by": "claude (read titles and PR descriptions, not full diffs)",
+   "date": "2026-09-28",
+   "note": "",
+   "prs": [
+    2322,
+    3710
+   ],
+   "verdict": "not-duplicate"
+  },
+  "2355-3591": {
+   "by": "claude (read titles and PR descriptions, not full diffs)",
+   "date": "2026-09-28",
+   "note": "",
+   "prs": [
+    2355,
+    3591
+   ],
+   "verdict": "not-duplicate"
+  },
+  "2382-3589": {
+   "by": "claude (read titles and PR descriptions, not full diffs)",
+   "date": "2026-09-28",
+   "note": "",
+   "prs": [
+    2382,
+    3589
+   ],
+   "verdict": "duplicate"
+  },
+  "2392-3136": {
+   "by": "claude (read titles and PR descriptions, not full diffs)",
+   "date": "2026-09-28",
+   "note": "#3136 replaces #2392; #3167 replaces #3136",
+   "prs": [
+    2392,
+    3136,
+    3167
+   ],
+   "verdict": "duplicate"
+  },
+  "2392-3167": {
+   "by": "claude (read titles and PR descriptions, not full diffs)",
+   "date": "2026-09-28",
+   "note": "#3136 replaces #2392; #3167 replaces #3136",
+   "prs": [
+    2392,
+    3136,
+    3167
+   ],
+   "verdict": "duplicate"
+  },
+  "2396-2399": {
+   "by": "claude (read titles and PR descriptions, not full diffs)",
+   "date": "2026-09-28",
+   "note": "",
+   "prs": [
+    2396,
+    2399
+   ],
+   "verdict": "not-duplicate"
+  },
+  "2397-2400": {
+   "by": "claude (read titles and PR descriptions, not full diffs)",
+   "date": "2026-09-28",
+   "note": "",
+   "prs": [
+    2397,
+    2400
+   ],
+   "verdict": "duplicate"
+  },
+  "2429-2946": {
+   "by": "claude (read titles and PR descriptions, not full diffs)",
+   "date": "2026-09-28",
+   "note": "",
+   "prs": [
+    2429,
+    2946
+   ],
+   "verdict": "not-duplicate"
+  },
+  "2627-2764": {
+   "by": "claude (read titles and PR descriptions, not full diffs)",
+   "date": "2026-09-28",
+   "note": "already done in a closed PR",
+   "prs": [
+    2764,
+    2627
+   ],
+   "verdict": "duplicate"
+  },
+  "2678-2679": {
+   "by": "claude (read titles and PR descriptions, not full diffs)",
+   "date": "2026-09-28",
+   "note": "",
+   "prs": [
+    2678,
+    2679
+   ],
+   "verdict": "duplicate"
+  },
+  "2701-3207": {
+   "by": "claude (read titles and PR descriptions, not full diffs)",
+   "date": "2026-09-28",
+   "note": "#3207 does the same fix plus .graphifyrc output-path resolution",
+   "prs": [
+    2701,
+    3207
+   ],
+   "verdict": "duplicate"
+  },
+  "2715-2725": {
+   "by": "claude (read titles and PR descriptions, not full diffs)",
+   "date": "2026-09-28",
+   "note": "",
+   "prs": [
+    2715,
+    2725
+   ],
+   "verdict": "duplicate"
+  },
+  "2716-2723": {
+   "by": "claude (read titles and PR descriptions, not full diffs)",
+   "date": "2026-09-28",
+   "note": "#2716 also fixes #2713 and #2714",
+   "prs": [
+    2716,
+    2723
+   ],
+   "verdict": "duplicate"
+  },
+  "2726-3618": {
+   "by": "claude (read titles and PR descriptions, not full diffs)",
+   "date": "2026-09-28",
+   "note": "",
+   "prs": [
+    2726,
+    3618
+   ],
+   "verdict": "not-duplicate"
+  },
+  "2797-2801": {
+   "by": "claude (read titles and PR descriptions, not full diffs)",
+   "date": "2026-09-28",
+   "note": "#2801 says it is an alternative to #2797",
+   "prs": [
+    2797,
+    2801
+   ],
+   "verdict": "duplicate"
+  },
+  "2806-2909": {
+   "by": "claude (read titles and PR descriptions, not full diffs)",
+   "date": "2026-09-28",
+   "note": "",
+   "prs": [
+    2806,
+    2909
+   ],
+   "verdict": "duplicate"
+  },
+  "2893-3766": {
+   "by": "claude (read titles and PR descriptions, not full diffs)",
+   "date": "2026-09-28",
+   "note": "",
+   "prs": [
+    2893,
+    3766
+   ],
+   "verdict": "not-duplicate"
+  },
+  "2912-2968": {
+   "by": "claude (read titles and PR descriptions, not full diffs)",
+   "date": "2026-09-28",
+   "note": "#1813 only does the error-message half; #2912 and #2968 are full alternatives",
+   "prs": [
+    1813,
+    2912,
+    2968
+   ],
+   "verdict": "duplicate"
+  },
+  "2924-3594": {
+   "by": "claude (read titles and PR descriptions, not full diffs)",
+   "date": "2026-09-28",
+   "note": "",
+   "prs": [
+    2924,
+    3594
+   ],
+   "verdict": "duplicate"
+  },
+  "2933-2956": {
+   "by": "claude (read titles and PR descriptions, not full diffs)",
+   "date": "2026-09-28",
+   "note": "already done in a closed PR",
+   "prs": [
+    2956,
+    2933
+   ],
+   "verdict": "duplicate"
+  },
+  "2965-2967": {
+   "by": "claude (read titles and PR descriptions, not full diffs)",
+   "date": "2026-09-28",
+   "note": "already done in a closed PR",
+   "prs": [
+    2965,
+    2967
+   ],
+   "verdict": "duplicate"
+  },
+  "3013-3783": {
+   "by": "claude (read titles and PR descriptions, not full diffs)",
+   "date": "2026-09-28",
+   "note": "#3013 is a slice of #1788 (same author); #3783 is an independent Perl extractor",
+   "prs": [
+    1788,
+    3013,
+    3783
+   ],
+   "verdict": "duplicate"
+  },
+  "3031-3076": {
+   "by": "claude (read titles and PR descriptions, not full diffs)",
+   "date": "2026-09-28",
+   "note": "",
+   "prs": [
+    3031,
+    3076
+   ],
+   "verdict": "duplicate"
+  },
+  "3038-3095": {
+   "by": "claude (read titles and PR descriptions, not full diffs)",
+   "date": "2026-09-28",
+   "note": "already done in a closed PR",
+   "prs": [
+    3095,
+    3038
+   ],
+   "verdict": "duplicate"
+  },
+  "3046-3245": {
+   "by": "claude (read titles and PR descriptions, not full diffs)",
+   "date": "2026-09-28",
+   "note": "already done in a closed PR",
+   "prs": [
+    3245,
+    3046
+   ],
+   "verdict": "duplicate"
+  },
+  "3054-3633": {
+   "by": "claude (read titles and PR descriptions, not full diffs)",
+   "date": "2026-09-28",
+   "note": "",
+   "prs": [
+    3054,
+    3633
+   ],
+   "verdict": "not-duplicate"
+  },
+  "3075-3789": {
+   "by": "claude (read titles and PR descriptions, not full diffs)",
+   "date": "2026-09-28",
+   "note": "#3789 carries #3075 forward onto v8",
+   "prs": [
+    3075,
+    3789
+   ],
+   "verdict": "duplicate"
+  },
+  "3136-3167": {
+   "by": "claude (read titles and PR descriptions, not full diffs)",
+   "date": "2026-09-28",
+   "note": "#3136 replaces #2392; #3167 replaces #3136",
+   "prs": [
+    2392,
+    3136,
+    3167
+   ],
+   "verdict": "duplicate"
+  },
+  "3149-3268": {
+   "by": "claude (read titles and PR descriptions, not full diffs)",
+   "date": "2026-09-28",
+   "note": "#3268 does the non --project half that #3149 deliberately left out",
+   "prs": [
+    3268,
+    3149
+   ],
+   "verdict": "not-duplicate"
+  },
+  "3218-3276": {
+   "by": "claude (read titles and PR descriptions, not full diffs)",
+   "date": "2026-09-28",
+   "note": "",
+   "prs": [
+    3218,
+    3276
+   ],
+   "verdict": "duplicate"
+  },
+  "3348-3450": {
+   "by": "claude (read titles and PR descriptions, not full diffs)",
+   "date": "2026-09-28",
+   "note": "",
+   "prs": [
+    3348,
+    3450
+   ],
+   "verdict": "duplicate"
+  },
+  "3364-3449": {
+   "by": "claude (read titles and PR descriptions, not full diffs)",
+   "date": "2026-09-28",
+   "note": "",
+   "prs": [
+    3364,
+    3449
+   ],
+   "verdict": "duplicate"
+  },
+  "3367-3383": {
+   "by": "claude (read titles and PR descriptions, not full diffs)",
+   "date": "2026-09-28",
+   "note": "already done in a closed PR",
+   "prs": [
+    3383,
+    3367
+   ],
+   "verdict": "duplicate"
+  },
+  "3385-3387": {
+   "by": "claude (read titles and PR descriptions, not full diffs)",
+   "date": "2026-09-28",
+   "note": "",
+   "prs": [
+    3385,
+    3387
+   ],
+   "verdict": "not-duplicate"
+  },
+  "3403-3456": {
+   "by": "claude (read titles and PR descriptions, not full diffs)",
+   "date": "2026-09-28",
+   "note": "",
+   "prs": [
+    3403,
+    3456
+   ],
+   "verdict": "duplicate"
+  },
+  "3404-3448": {
+   "by": "claude (read titles and PR descriptions, not full diffs)",
+   "date": "2026-09-28",
+   "note": "",
+   "prs": [
+    3404,
+    3448
+   ],
+   "verdict": "duplicate"
+  },
+  "3404-3519": {
+   "by": "claude (read titles and PR descriptions, not full diffs)",
+   "date": "2026-09-28",
+   "note": "already done in a closed PR",
+   "prs": [
+    3404,
+    3519
+   ],
+   "verdict": "duplicate"
+  },
+  "3424-3451": {
+   "by": "claude (read titles and PR descriptions, not full diffs)",
+   "date": "2026-09-28",
+   "note": "already done in a closed PR",
+   "prs": [
+    3451,
+    3424
+   ],
+   "verdict": "duplicate"
+  },
+  "3432-3453": {
+   "by": "claude (read titles and PR descriptions, not full diffs)",
+   "date": "2026-09-28",
+   "note": "already done in a closed PR",
+   "prs": [
+    3453,
+    3432
+   ],
+   "verdict": "duplicate"
+  },
+  "3440-3444": {
+   "by": "claude (read titles and PR descriptions, not full diffs)",
+   "date": "2026-09-28",
+   "note": "both also overlap #3434",
+   "prs": [
+    3440,
+    3444
+   ],
+   "verdict": "duplicate"
+  },
+  "3443-3498": {
+   "by": "claude (read titles and PR descriptions, not full diffs)",
+   "date": "2026-09-28",
+   "note": "already done in a closed PR",
+   "prs": [
+    3443,
+    3498
+   ],
+   "verdict": "duplicate"
+  },
+  "3443-3788": {
+   "by": "claude (read titles and PR descriptions, not full diffs)",
+   "date": "2026-09-28",
+   "note": "overlapping fixes to the same per-session nudge",
+   "prs": [
+    3443,
+    3788
+   ],
+   "verdict": "duplicate"
+  },
+  "3448-3519": {
+   "by": "claude (read titles and PR descriptions, not full diffs)",
+   "date": "2026-09-28",
+   "note": "already done in a closed PR",
+   "prs": [
+    3448,
+    3519
+   ],
+   "verdict": "duplicate"
+  },
+  "3452-3455": {
+   "by": "claude (read titles and PR descriptions, not full diffs)",
+   "date": "2026-09-28",
+   "note": "",
+   "prs": [
+    3452,
+    3455
+   ],
+   "verdict": "duplicate"
+  },
+  "3453-3466": {
+   "by": "claude (read titles and PR descriptions, not full diffs)",
+   "date": "2026-09-28",
+   "note": "",
+   "prs": [
+    3453,
+    3466
+   ],
+   "verdict": "not-duplicate"
+  },
+  "3512-3521": {
+   "by": "claude (read titles and PR descriptions, not full diffs)",
+   "date": "2026-09-28",
+   "note": "already done in a closed PR",
+   "prs": [
+    3521,
+    3512
+   ],
+   "verdict": "duplicate"
+  },
+  "3676-3735": {
+   "by": "claude (read titles and PR descriptions, not full diffs)",
+   "date": "2026-09-28",
+   "note": "already done in a closed PR",
+   "prs": [
+    3676,
+    3735
+   ],
+   "verdict": "duplicate"
+  },
+  "397-420": {
+   "by": "claude (read titles and PR descriptions, not full diffs)",
+   "date": "2026-09-28",
+   "note": "",
+   "prs": [
+    397,
+    420
+   ],
+   "verdict": "not-duplicate"
+  },
+  "406-3651": {
+   "by": "claude (read titles and PR descriptions, not full diffs)",
+   "date": "2026-09-28",
+   "note": "",
+   "prs": [
+    167,
+    406,
+    3651
+   ],
+   "verdict": "duplicate"
+  },
+  "424-2743": {
+   "by": "claude (read titles and PR descriptions, not full diffs)",
+   "date": "2026-09-28",
+   "note": "#2743 is Docker setup; its 'closes #1' link is unrelated",
+   "prs": [
+    424,
+    1782,
+    2743
+   ],
+   "verdict": "not-duplicate"
+  },
+  "494-3623": {
+   "by": "claude (read titles and PR descriptions, not full diffs)",
+   "date": "2026-09-28",
+   "note": "",
+   "prs": [
+    494,
+    3623
+   ],
+   "verdict": "not-duplicate"
+  },
+  "534-611": {
+   "by": "claude (read titles and PR descriptions, not full diffs)",
+   "date": "2026-09-28",
+   "note": "already done in a closed PR",
+   "prs": [
+    534,
+    611
+   ],
+   "verdict": "duplicate"
+  },
+  "542-565": {
+   "by": "claude (read titles and PR descriptions, not full diffs)",
+   "date": "2026-09-28",
+   "note": "already done in a closed PR",
+   "prs": [
+    542,
+    565
+   ],
+   "verdict": "duplicate"
+  },
+  "707-1367": {
+   "by": "claude (read titles and PR descriptions, not full diffs)",
+   "date": "2026-09-28",
+   "note": "",
+   "prs": [
+    707,
+    1367,
+    1874
+   ],
+   "verdict": "duplicate"
+  },
+  "707-1874": {
+   "by": "claude (read titles and PR descriptions, not full diffs)",
+   "date": "2026-09-28",
+   "note": "",
+   "prs": [
+    707,
+    1367,
+    1874
+   ],
+   "verdict": "duplicate"
+  },
+  "720-805": {
+   "by": "claude (read titles and PR descriptions, not full diffs)",
+   "date": "2026-09-28",
+   "note": "",
+   "prs": [
+    720,
+    805
+   ],
+   "verdict": "duplicate"
+  },
+  "809-1089": {
+   "by": "claude (read titles and PR descriptions, not full diffs)",
+   "date": "2026-09-28",
+   "note": "#1089 is #809 re-targeted to v8",
+   "prs": [
+    809,
+    1089
+   ],
+   "verdict": "duplicate"
+  },
+  "816-2203": {
+   "by": "claude (read titles and PR descriptions, not full diffs)",
+   "date": "2026-09-28",
+   "note": "",
+   "prs": [
+    816,
+    2203,
+    3767
+   ],
+   "verdict": "duplicate"
+  }
+ }
+}

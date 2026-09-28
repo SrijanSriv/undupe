@@ -148,10 +148,13 @@ def build(repo: str) -> dict:
     def with_verdict(pair: dict | None) -> dict | None:
         if pair is None:
             return None
-        verdict = verdicts.get(pair_key(pair["a"], pair["b"]), {}).get("verdict")
+        entry = verdicts.get(pair_key(pair["a"], pair["b"]), {})
+        verdict = entry.get("verdict")
         if verdict == "not-duplicate":
-            return None  # a person checked it and said no
+            return None  # someone checked it and said no
         pair["confirmed"] = verdict == "duplicate"
+        if pair["confirmed"]:
+            pair["checked"] = {"by": entry.get("by", "?"), "date": entry.get("date", ""), "note": entry.get("note", "")}
         pair["high"] = pair["high"] or pair["confirmed"]
         return pair
 
@@ -170,6 +173,7 @@ def build(repo: str) -> dict:
                 done[a["number"]].append(p)
     already_done = sorted(
         ({"pr": num, "high": any(p["high"] for p in ps),
+          "confirmed": any(p["confirmed"] for p in ps),
           "matches": sorted(ps, key=lambda p: (not p["high"], -p["score"]))[:5]}
          for num, ps in done.items()),
         key=lambda d: (not d["high"], -d["matches"][0]["score"]),

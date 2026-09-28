@@ -139,7 +139,7 @@
     </ul>
     PRs naming different languages (e.g. PHP vs Scala) are not matched on files alone, since they edit the same extractor files but do different work.
     “Same author” groups are one person submitting twice, not two people duplicating effort.
-    “✓ Checked” means a person read the PRs and confirmed they are the same work; pairs a person rejected are not shown.
+    “✓ Checked” means someone read the PRs and confirmed they are the same work (hover the badge to see who, and how); pairs rejected that way are not shown. All verdicts are in <a id="verdicts-link" href="#">verdicts.json</a>.
     <p><b>This is a heuristic, not a verdict.</b> Matches come from titles, descriptions and file lists, not from reading the code. Always check before closing anything. Not affiliated with the repo’s maintainers.</p>
   </footer>
 </div>
@@ -165,7 +165,7 @@
   document.title = `${repo} · undupe`;
   $("repo-name").textContent = repo;
   $("repo-link").href = `https://github.com/${repo}/pulls`;
-  const checkedNote = stats.confirmed ? ` · ${stats.confirmed} group${stats.confirmed === 1 ? "" : "s"} checked by hand` : "";
+  const checkedNote = stats.confirmed ? ` · ${stats.confirmed} group${stats.confirmed === 1 ? "" : "s"} checked` : "";
   $("updated").textContent = `Data from ${new Date(data.generated).toLocaleString(undefined, { dateStyle: "medium", timeStyle: "short" })} · ${stats.open} open PRs · current base branch: ${base}${checkedNote}`;
 
   $("stats").innerHTML = [
@@ -187,6 +187,13 @@
       <div class="title">${esc(p.t)}</div>
       <div class="meta"><span>@${esc(p.a)}</span><span>opened ${p.c}</span>${tags.join("")}</div>
     </div>`;
+  }
+
+  $("verdicts-link").href = `https://github.com/${data.undupeRepo}/blob/main/verdicts.json`;
+  function checkedTitle(pairs) {
+    const c = pairs.find((p) => p.checked)?.checked;
+    if (!c) return "Checked";
+    return `Checked by ${c.by}${c.date ? " on " + c.date : ""}${c.note ? ". Note: " + c.note : ""}`;
   }
 
   // Opens a pre-filled issue on the undupe repo. Only public PR numbers go in the URL.
@@ -218,7 +225,7 @@
       return `<article class="card">
         <div class="card-head">
           <span class="badge ${g.high ? "high" : "poss"}">${g.high ? "Likely duplicate" : "Possible overlap"}</span>
-          ${g.confirmed ? `<span class="badge checked" title="A person read these PRs and confirmed they are the same work">✓ Checked</span>` : ""}
+          ${g.confirmed ? `<span class="badge checked" title="${esc(checkedTitle(g.pairs))}">✓ Checked</span>` : ""}
           ${g.resubmit ? `<span class="badge resub">Same author</span>` : ""}
           <span class="reasons">${esc(reasons.join(" · "))}</span>
         </div>
@@ -265,6 +272,7 @@
       return `<article class="card">
         <div class="card-head">
           <span class="badge ${d.high ? "high" : "poss"}">${d.high ? "Likely already done" : "Possibly done"}</span>
+          ${d.confirmed ? `<span class="badge checked" title="${esc(checkedTitle(d.matches))}">✓ Checked</span>` : ""}
           <span class="reasons">${esc(reasons.join(" · "))}</span>
         </div>
         ${prRow(d.pr)}
