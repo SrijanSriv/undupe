@@ -32,6 +32,13 @@
   header p { margin: 0; color: var(--muted); }
   .updated { font-size: 13px; color: var(--faint); margin-top: 6px; }
 
+  .headline { margin: 28px 0 0; background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 20px 22px; }
+  .headline .big { font-size: clamp(28px, 5vw, 40px); font-weight: 700; letter-spacing: -0.03em; line-height: 1.1; font-variant-numeric: tabular-nums; }
+  .headline .big small { font-size: 0.5em; font-weight: 600; color: var(--muted); letter-spacing: -0.01em; }
+  .headline .label { font-size: 17px; font-weight: 600; margin: 4px 0 12px; }
+  .headline ul { margin: 0; padding-left: 18px; color: var(--muted); font-size: 14.5px; }
+  .headline li { margin-bottom: 4px; }
+  .headline li b { color: var(--text); font-weight: 600; }
   .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin: 28px 0; }
   .stat { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 14px 16px; }
   .stat b { display: block; font-size: 26px; font-variant-numeric: tabular-nums; letter-spacing: -0.02em; }
@@ -95,6 +102,7 @@
     <div class="updated" id="updated">Loading…</div>
   </header>
 
+  <section class="headline" id="headline" aria-label="What could be closed" hidden></section>
   <section class="stats" id="stats" aria-label="Summary"></section>
 
   <section class="search">
@@ -171,6 +179,22 @@
   about.href = "../../about/";
   about.textContent = "How did we get here?";
   $("updated").append(about);
+
+  if (stats.closableSafe !== undefined && stats.closableMax) {
+    const range = stats.closableMax > stats.closableSafe ? `${stats.closableSafe}–${stats.closableMax}` : `${stats.closableSafe}`;
+    const pct = (n) => Math.round((100 * n) / stats.open);
+    const pctRange = stats.closableMax > stats.closableSafe ? `${pct(stats.closableSafe)}–${pct(stats.closableMax)}%` : `${pct(stats.closableSafe)}%`;
+    const extra = stats.closableMax - stats.closableSafe;
+    $("headline").innerHTML = `
+      <div class="big">${range} <small>of ${stats.open} open PRs (${pctRange})</small></div>
+      <div class="label">could be closed</div>
+      <ul>
+        <li><b>${stats.closableSafe}</b> are duplicates of another open PR. Keep one per group; the rest can go.</li>
+        ${extra ? `<li><b>Up to ${extra} more</b> look like work already done in a closed PR. Check the fix actually landed before closing these.</li>` : ""}
+        <li>That leaves <b>${stats.toReview}</b> PRs to review instead of ${stats.inHighGroups} overlapping ones.</li>
+      </ul>`;
+    $("headline").hidden = false;
+  }
 
   $("stats").innerHTML = [
     [stats.highGroups, "groups of likely duplicates"],

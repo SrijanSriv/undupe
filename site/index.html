@@ -125,7 +125,7 @@
     <a class="repo" href="${esc(r.repo)}/">
       <span class="name">${esc(r.repo)}</span>
       <span class="sub">${r.open} open PRs · ${r.contested} issues with competing PRs · updated ${new Date(r.generated).toLocaleDateString(undefined, { dateStyle: "medium" })}</span>
-      <span class="big"><b>${r.extraHigh}</b><span>likely extra PRs</span></span>
+      <span class="big"><b>${r.closableMax > r.closableSafe ? `${r.closableSafe}–${r.closableMax}` : (r.closableSafe ?? r.extraHigh)}</b><span>PRs could be closed</span></span>
     </a>`).join("") : `<div style="color:var(--muted)">No repositories yet.</div>`;
 
   // Accepts "owner/repo", "github.com/owner/repo", or a full URL (extra path parts are ignored).

@@ -76,6 +76,8 @@
 
   <h2>What the numbers mean</h2>
   <dl>
+    <div><dt>Could be closed</dt><dd>A range. The low end is the extra PRs in duplicate groups (keep one per group, close the rest). The high end adds open PRs whose work already appears in a closed PR; those need a quick check that the fix really landed, because many maintainers ship code without GitHub’s merge button.</dd></div>
+    <div><dt>PRs to review</dt><dd>One per duplicate group whose work hasn’t landed yet: the PR worth a maintainer’s time. It’s not a claim that the PR is ready to merge.</dd></div>
     <div><dt>Groups of likely duplicates</dt><dd>Sets of open PRs that appear to do the same work.</dd></div>
     <div><dt>Extra PRs</dt><dd>In each group, every PR after the first. If three PRs do one job, two are extra.</dd></div>
     <div><dt>Issues with 2+ open PRs</dt><dd>Issues that more than one open PR says it fixes.</dd></div>

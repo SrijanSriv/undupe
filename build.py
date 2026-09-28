@@ -229,6 +229,17 @@ def build(repo: str) -> dict:
     )
 
     high = [g for g in groups if g["high"]]
+
+    # What could be closed: every PR after the first in a likely group is extra
+    # (safe to close). On top of that, open PRs whose work matches a closed PR
+    # may be unneeded, and if one member of a group is already done, the whole
+    # group is. Closed PRs are often shipped without GitHub's merge button, so
+    # that second part is an upper bound until someone checks the fix landed.
+    done_nums = {d["pr"] for d in already_done if d["high"]}
+    extras = {n for g in high for n in g["prs"][1:]}
+    done_groups = [g for g in high if done_nums & set(g["prs"])]
+    closable_max = extras | done_nums | {n for g in done_groups for n in g["prs"]}
+    to_review = [g for g in high if not done_nums & set(g["prs"])]
     out = {
         "repo": raw["repo"],
         "undupeRepo": UNDUPE_REPO,
@@ -246,6 +257,10 @@ def build(repo: str) -> dict:
             "contested": len(contested),
             "confirmed": sum(1 for g in groups if g["confirmed"]),
             "doneHigh": sum(1 for d in already_done if d["high"]),
+            "closableSafe": len(extras),
+            "closableMax": len(closable_max),
+            "inHighGroups": sum(len(g["prs"]) for g in high),
+            "toReview": len(to_review),
             "doneAll": len(already_done),
             "closedCompared": len(closed),
             "rejectedPairs": sum(1 for v in verdicts.values() if v.get("verdict") == "not-duplicate"),
