@@ -17,6 +17,15 @@ Both scripts also take repos directly: `python3 fetch.py owner/name`.
 
 To track a new repo, add a line to `repos.txt` and run both scripts.
 
+## Checking matches by hand
+
+```bash
+python3 review.py            # walk through unchecked likely groups
+python3 review.py --all      # include "possible" groups too
+```
+
+For each group it shows the PRs and asks duplicate / not / skip / open in browser. Answers go into `verdicts.json` (commit it). On the site, confirmed groups get a "✓ Checked" badge and rejected pairs disappear. Reports from the site's "Not a duplicate? / Confirm" links arrive as issues on this repo; record them the same way.
+
 ## Deploy
 
 `.github/workflows/update.yml` runs daily (and on every push to `main`): it fetches, builds and publishes `site/` to GitHub Pages. Run it by hand from the Actions tab ("Update and deploy" → Run workflow). Generated files are not committed.
@@ -25,6 +34,7 @@ To track a new repo, add a line to `repos.txt` and run both scripts.
 
 - `repos.txt`: the repos undupe tracks
 - `fetch.py`: downloads open PRs to `data/<owner>/<repo>/raw.json` (not committed). Cheap fields only; asking for CI status or reviews makes GitHub time out.
+- `review.py`: record hand-checked verdicts in `verdicts.json`
 - `build.py`: scoring and grouping (thresholds are constants at the top). Writes `site/<owner>/<repo>/data.json` and `index.html`, plus `site/repos.json`.
 - `templates/repo.html`: the per-repo page, copied into each repo folder
 - `site/index.html`: home page

@@ -67,8 +67,19 @@ def weighted_overlap(a: set, b: set, weight) -> float:
     return sum(weight(x) for x in a & b) / union if union else 0.0
 
 
+def load_verdicts() -> dict:
+    """verdicts.json: {repo: {"<a>-<b>": {"verdict": "duplicate"|"not-duplicate", ...}}}, written by review.py."""
+    path = Path("verdicts.json")
+    return json.load(open(path)) if path.exists() else {}
+
+
+def pair_key(a: int, b: int) -> str:
+    return f"{min(a, b)}-{max(a, b)}"
+
+
 def build(repo: str) -> dict:
     raw = json.load(open(Path("data", repo, "raw.json")))
+    verdicts = load_verdicts().get(repo, {})
     prs = raw["prs"]
     for p in prs:
         p["F"] = {f["path"] for f in p.get("files") or []}
@@ -116,9 +127,13 @@ def build(repo: str) -> dict:
             reasons.append(f"Change the same uncommon files ({round(fs * 100)}% weighted overlap)")
         elif rare_match:
             reasons.append(f"Both touch {sorted(rare_files)[0]}, which almost no other PR does")
+        verdict = verdicts.get(pair_key(a["number"], b["number"]), {}).get("verdict")
+        if verdict == "not-duplicate":
+            continue  # a person checked it and said no
         pairs.append({
             "a": a["number"], "b": b["number"],
-            "high": bool(same_issue) and corroborated or ts >= HIGH_TITLE,
+            "confirmed": verdict == "duplicate",
+            "high": verdict == "duplicate" or bool(same_issue) and corroborated or ts >= HIGH_TITLE,
             "sameAuthor": bool(same_author),
             "score": round((1 if same_issue else 0) + fs + ts, 3),
             "reasons": reasons,
@@ -155,13 +170,14 @@ def build(repo: str) -> dict:
         groups.append({
             "prs": members,
             "high": any(p["high"] for p in c["pairs"]),
+            "confirmed": all(p["confirmed"] for p in c["pairs"]),
             # Same person twice is a resubmission (clutter), not two people
             # duplicating each other's effort.
             "resubmit": len({by_num[x]["author"]["login"] for x in c["prs"] if by_num[x]["author"]}) == 1,
             "score": max(p["score"] for p in c["pairs"]),
             "pairs": sorted(c["pairs"], key=lambda p: -p["score"]),
         })
-    groups.sort(key=lambda g: (not g["high"], -g["score"]))
+    groups.sort(key=lambda g: (not g["high"], not g["confirmed"], -g["score"]))
 
     claims = collections.defaultdict(list)
     for p in prs:
@@ -188,6 +204,8 @@ def build(repo: str) -> dict:
             "highPeople": sum(1 for g in high if not g["resubmit"]),
             "extraHighPeople": sum(len(g["prs"]) - 1 for g in high if not g["resubmit"]),
             "contested": len(contested),
+            "confirmed": sum(1 for g in groups if g["confirmed"]),
+            "rejectedPairs": sum(1 for v in verdicts.values() if v.get("verdict") == "not-duplicate"),
         },
         "groups": groups,
         "contested": contested,

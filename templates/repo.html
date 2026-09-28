@@ -59,6 +59,7 @@
   .badge { font-size: 12px; font-weight: 600; padding: 2px 8px; border-radius: 6px; }
   .badge.high { color: var(--high); background: var(--high-soft); }
   .badge.poss { color: var(--poss); background: var(--poss-soft); }
+  .badge.checked { color: var(--ok); background: transparent; border: 1px solid currentColor; }
   .badge.resub { color: var(--resub); background: var(--resub-soft); }
   .reasons { font-size: 13px; color: var(--muted); }
   .pr { display: grid; grid-template-columns: 64px 1fr; gap: 2px 10px; padding: 7px 0; border-top: 1px solid var(--border); }
@@ -125,6 +126,7 @@
     </ul>
     PRs naming different languages (e.g. PHP vs Scala) are not matched on files alone, since they edit the same extractor files but do different work.
     “Same author” groups are one person submitting twice, not two people duplicating effort.
+    “✓ Checked” means a person read the PRs and confirmed they are the same work; pairs a person rejected are not shown.
     <p><b>This is a heuristic, not a verdict.</b> Matches come from titles, descriptions and file lists, not from reading the code. Always check before closing anything. Not affiliated with the repo’s maintainers.</p>
   </footer>
 </div>
@@ -148,7 +150,8 @@
   document.title = `${repo} · undupe`;
   $("repo-name").textContent = repo;
   $("repo-link").href = `https://github.com/${repo}/pulls`;
-  $("updated").textContent = `Data from ${new Date(data.generated).toLocaleString(undefined, { dateStyle: "medium", timeStyle: "short" })} · ${stats.open} open PRs · current base branch: ${base}`;
+  const checkedNote = stats.confirmed ? ` · ${stats.confirmed} group${stats.confirmed === 1 ? "" : "s"} checked by hand` : "";
+  $("updated").textContent = `Data from ${new Date(data.generated).toLocaleString(undefined, { dateStyle: "medium", timeStyle: "short" })} · ${stats.open} open PRs · current base branch: ${base}${checkedNote}`;
 
   $("stats").innerHTML = [
     [stats.highGroups, "groups of likely duplicates"],
@@ -200,6 +203,7 @@
       return `<article class="card">
         <div class="card-head">
           <span class="badge ${g.high ? "high" : "poss"}">${g.high ? "Likely duplicate" : "Possible overlap"}</span>
+          ${g.confirmed ? `<span class="badge checked" title="A person read these PRs and confirmed they are the same work">✓ Checked</span>` : ""}
           ${g.resubmit ? `<span class="badge resub">Same author</span>` : ""}
           <span class="reasons">${esc(reasons.join(" · "))}</span>
         </div>
