@@ -73,6 +73,9 @@
   .report { margin-top: 10px; font-size: 13px; display: flex; flex-wrap: wrap; gap: 4px 14px; }
   .report a { color: var(--muted); }
   .report a:hover { color: var(--accent); }
+  .note { font-size: 14px; color: var(--muted); margin: 0 0 14px; max-width: 70ch; }
+  .sub-label { font-size: 12.5px; color: var(--faint); margin: 10px 0 0; text-transform: uppercase; letter-spacing: 0.04em; }
+  .tag.merged { color: var(--resub); border-color: currentColor; }
   details { margin-top: 8px; font-size: 13px; color: var(--muted); }
   details summary { cursor: pointer; }
   details code { font-family: var(--mono); font-size: 12px; display: block; overflow-wrap: anywhere; }
@@ -104,6 +107,7 @@
   <nav class="tabs" role="tablist">
     <button role="tab" data-tab="groups" aria-selected="true">Duplicate groups</button>
     <button role="tab" data-tab="issues" aria-selected="false">Issues with competing PRs</button>
+    <button role="tab" data-tab="done" aria-selected="false">Already done before?</button>
   </nav>
 
   <div id="groups-view">
@@ -115,6 +119,15 @@
     <div id="groups"></div>
   </div>
   <div id="issues-view" hidden><div id="issues"></div></div>
+  <div id="done-view" hidden>
+    <p class="note">Open PRs that look like work from a PR that is already closed. Closed doesn’t always mean rejected: many maintainers ship a PR’s code in another commit and then close it, so these open PRs may no longer be needed.</p>
+    <div class="filters" id="done-filters">
+      <button class="chip" data-f="high" aria-pressed="true">Likely</button>
+      <button class="chip" data-f="poss" aria-pressed="false">Possible</button>
+      <button class="chip" data-f="all" aria-pressed="false">All</button>
+    </div>
+    <div id="done"></div>
+  </div>
 
   <footer>
     <h3>How this works</h3>
@@ -144,6 +157,8 @@
     return;
   }
   const { repo, prs, groups, contested, stats, base } = data;
+  const alreadyDone = data.alreadyDone || [];
+  const closed = data.closed || {};
   const url = (n) => `https://github.com/${repo}/pull/${n}`;
   const issueUrl = (n) => `https://github.com/${repo}/issues/${n}`;
 
@@ -157,7 +172,7 @@
     [stats.highGroups, "groups of likely duplicates"],
     [stats.extraHigh, "extra PRs in those groups"],
     [stats.contested, "issues with 2+ open PRs"],
-    [stats.groups - stats.highGroups, "more possible groups"],
+    [stats.doneHigh ?? 0, "open PRs that redo closed work"],
   ].map(([n, l]) => `<div class="stat"><b>${n}</b><span>${l}</span></div>`).join("");
 
   function prRow(n, { first = false } = {}) {
@@ -230,12 +245,52 @@
       ${c.prs.slice().sort((a, b) => prs[a].c.localeCompare(prs[b].c)).map((n, i) => prRow(n, { first: i === 0 })).join("")}
     </article>`).join("") : `<div class="empty">No issue has more than one open PR.</div>`;
 
+  // ── Already done ──────────────────────────────────────────
+  function closedRow(n) {
+    const c = closed[n];
+    if (!c) return "";
+    return `<div class="pr">
+      <a class="num" href="${url(n)}" target="_blank" rel="noopener">#${n}</a>
+      <div class="title">${esc(c.t)}</div>
+      <div class="meta"><span>@${esc(c.a)}</span><span>closed ${c.x}</span>${c.m ? `<span class="tag merged">merged</span>` : ""}</div>
+    </div>`;
+  }
+  let doneFilter = "high";
+  function renderDone() {
+    const list = alreadyDone.filter((d) => doneFilter === "all" || (doneFilter === "high") === d.high);
+    if (!list.length) { $("done").innerHTML = `<div class="empty">Nothing in this view${data.closed ? "" : " (closed PRs weren’t fetched)"}.</div>`; return; }
+    $("done").innerHTML = list.map((d) => {
+      const reasons = [...new Set(d.matches[0].reasons.map((r) => r.replace(/ \(\d+% weighted overlap\)/, "")))];
+      const group = { prs: [d.pr, ...d.matches.map((m) => m.b)] };
+      return `<article class="card">
+        <div class="card-head">
+          <span class="badge ${d.high ? "high" : "poss"}">${d.high ? "Likely already done" : "Possibly done"}</span>
+          <span class="reasons">${esc(reasons.join(" · "))}</span>
+        </div>
+        ${prRow(d.pr)}
+        <div class="sub-label">Similar closed PR${d.matches.length > 1 ? "s" : ""}</div>
+        ${d.matches.map((m) => closedRow(m.b)).join("")}
+        <div class="report">
+          <a href="${reportUrl(group, reasons, false)}" target="_blank" rel="noopener">Not the same work? Tell us</a>
+          <a href="${reportUrl(group, reasons, true)}" target="_blank" rel="noopener">Confirm it’s the same</a>
+        </div>
+      </article>`;
+    }).join("");
+  }
+  $("done-filters").addEventListener("click", (e) => {
+    const b = e.target.closest(".chip"); if (!b) return;
+    doneFilter = b.dataset.f;
+    for (const c of $("done-filters").children) c.setAttribute("aria-pressed", c === b);
+    renderDone();
+  });
+
   // ── Tabs ──────────────────────────────────────────────────
   document.querySelector(".tabs").addEventListener("click", (e) => {
     const b = e.target.closest("button"); if (!b) return;
     for (const t of document.querySelectorAll(".tabs button")) t.setAttribute("aria-selected", t === b);
     $("groups-view").hidden = b.dataset.tab !== "groups";
     $("issues-view").hidden = b.dataset.tab !== "issues";
+    $("done-view").hidden = b.dataset.tab !== "done";
   });
 
   // ── Search ────────────────────────────────────────────────
@@ -266,6 +321,7 @@
   $("q").addEventListener("input", (e) => { clearTimeout(t); t = setTimeout(() => search(e.target.value), 120); });
 
   renderGroups();
+  renderDone();
 })();
 </script>
 </body>

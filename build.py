@@ -77,29 +77,24 @@ def pair_key(a: int, b: int) -> str:
     return f"{min(a, b)}-{max(a, b)}"
 
 
-def build(repo: str) -> dict:
-    raw = json.load(open(Path("data", repo, "raw.json")))
-    verdicts = load_verdicts().get(repo, {})
-    prs = raw["prs"]
-    for p in prs:
-        p["F"] = {f["path"] for f in p.get("files") or []}
-        p["I"] = set(CLOSES.findall(p.get("body") or "")) | set(TITLE_REF.findall(p["title"]))
-        p["I"].discard(str(p["number"]))
-        p["W"] = words(p["title"])
-        p["L"] = langs(p["title"])
+def prepare(p: dict) -> dict:
+    p["F"] = {f["path"] for f in p.get("files") or []}
+    p["I"] = set(CLOSES.findall(p.get("body") or "")) | set(TITLE_REF.findall(p["title"]))
+    p["I"].discard(str(p["number"]))
+    p["W"] = words(p["title"])
+    p["L"] = langs(p["title"])
+    return p
 
-    n = len(prs)
-    file_df = collections.Counter(f for p in prs for f in p["F"])
-    word_df = collections.Counter(w for p in prs for w in p["W"])
+
+def make_matcher(pool: list[dict]):
+    """Return match(a, b) -> pair dict or None. File and word rarity come from `pool`."""
+    n = len(pool)
+    file_df = collections.Counter(f for p in pool for f in p["F"])
+    word_df = collections.Counter(w for p in pool for w in p["W"])
     fw = lambda f: math.log(n / file_df[f])
     ww = lambda w: math.log(n / word_df[w])
 
-    # Current base branch = the one most recent PRs target.
-    recent = sorted(prs, key=lambda p: p["createdAt"])[-100:]
-    base = collections.Counter(p["baseRefName"] for p in recent).most_common(1)[0][0]
-
-    pairs = []
-    for a, b in itertools.combinations(prs, 2):
+    def match(a: dict, b: dict) -> dict | None:
         same_issue = sorted(a["I"] & b["I"], key=int)
         fs = weighted_overlap(a["F"], b["F"], fw)
         ts = weighted_overlap(a["W"], b["W"], ww)
@@ -112,7 +107,7 @@ def build(repo: str) -> dict:
         rare_words = [w for w in a["W"] & b["W"] if word_df[w] <= RARE_WORD_MAX]
         rare_match = bool(rare_files and rare_words) and not different_lang and not same_author
         if not (same_issue or ts >= HIGH_TITLE or file_match or rare_match):
-            continue
+            return None
         # A shared issue alone is not proof: big issues get split into parts,
         # so it only counts as high confidence when titles or files also agree.
         corroborated = (fs >= ISSUE_FILE_MIN or ts >= ISSUE_TITLE_MIN) and not different_lang
@@ -122,23 +117,64 @@ def build(repo: str) -> dict:
                            + ("" if corroborated else " (but look different, may fix separate parts)"))
         if ts >= HIGH_TITLE:
             reasons.append("Near-identical titles")
-        shared = sorted(a["F"] & b["F"], key=lambda f: file_df[f])
         if fs >= FILE_MIN:
             reasons.append(f"Change the same uncommon files ({round(fs * 100)}% weighted overlap)")
         elif rare_match:
             reasons.append(f"Both touch {sorted(rare_files)[0]}, which almost no other PR does")
-        verdict = verdicts.get(pair_key(a["number"], b["number"]), {}).get("verdict")
-        if verdict == "not-duplicate":
-            continue  # a person checked it and said no
-        pairs.append({
+        return {
             "a": a["number"], "b": b["number"],
-            "confirmed": verdict == "duplicate",
-            "high": verdict == "duplicate" or bool(same_issue) and corroborated or ts >= HIGH_TITLE,
+            "high": bool(same_issue) and corroborated or ts >= HIGH_TITLE,
             "sameAuthor": bool(same_author),
             "score": round((1 if same_issue else 0) + fs + ts, 3),
             "reasons": reasons,
-            "shared": shared[:8],
-        })
+            "shared": sorted(a["F"] & b["F"], key=lambda f: file_df[f])[:8],
+        }
+
+    return match
+
+
+def build(repo: str) -> dict:
+    raw = json.load(open(Path("data", repo, "raw.json")))
+    closed_path = Path("data", repo, "closed.json")
+    closed = [prepare(p) for p in json.load(open(closed_path))["prs"]] if closed_path.exists() else []
+    verdicts = load_verdicts().get(repo, {})
+    prs = [prepare(p) for p in raw["prs"]]
+    n = len(prs)
+
+    # Current base branch = the one most recent PRs target.
+    recent = sorted(prs, key=lambda p: p["createdAt"])[-100:]
+    base = collections.Counter(p["baseRefName"] for p in recent).most_common(1)[0][0]
+
+    def with_verdict(pair: dict | None) -> dict | None:
+        if pair is None:
+            return None
+        verdict = verdicts.get(pair_key(pair["a"], pair["b"]), {}).get("verdict")
+        if verdict == "not-duplicate":
+            return None  # a person checked it and said no
+        pair["confirmed"] = verdict == "duplicate"
+        pair["high"] = pair["high"] or pair["confirmed"]
+        return pair
+
+    match_open = make_matcher(prs)
+    pairs = [p for a, b in itertools.combinations(prs, 2) if (p := with_verdict(match_open(a, b)))]
+
+    # Open PRs that redo work from a closed PR. Rarity is measured over open and
+    # closed PRs together. Same-author matches are skipped: that is usually
+    # someone reopening their own PR, not duplicated effort.
+    match_all = make_matcher(prs + closed)
+    done: dict[int, list] = collections.defaultdict(list)
+    for a in prs:
+        for c in closed:
+            p = with_verdict(match_all(a, c))
+            if p and not p["sameAuthor"]:
+                done[a["number"]].append(p)
+    already_done = sorted(
+        ({"pr": num, "high": any(p["high"] for p in ps),
+          "matches": sorted(ps, key=lambda p: (not p["high"], -p["score"]))[:5]}
+         for num, ps in done.items()),
+        key=lambda d: (not d["high"], -d["matches"][0]["score"]),
+    )
+    closed_used = {m["b"] for d in already_done for m in d["matches"]}
 
     # Group pairs into clusters (union-find).
     parent: dict[int, int] = {}
@@ -205,10 +241,23 @@ def build(repo: str) -> dict:
             "extraHighPeople": sum(len(g["prs"]) - 1 for g in high if not g["resubmit"]),
             "contested": len(contested),
             "confirmed": sum(1 for g in groups if g["confirmed"]),
+            "doneHigh": sum(1 for d in already_done if d["high"]),
+            "doneAll": len(already_done),
+            "closedCompared": len(closed),
             "rejectedPairs": sum(1 for v in verdicts.values() if v.get("verdict") == "not-duplicate"),
         },
         "groups": groups,
         "contested": contested,
+        "alreadyDone": already_done,
+        "closed": {
+            p["number"]: {
+                "t": p["title"],
+                "a": (p.get("author") or {}).get("login", "?"),
+                "x": (p.get("closedAt") or "")[:10],
+                "m": bool(p.get("mergedAt")),
+            }
+            for p in closed if p["number"] in closed_used
+        },
         "prs": {
             p["number"]: {
                 "t": p["title"],
@@ -230,7 +279,8 @@ def build(repo: str) -> dict:
     s = out["stats"]
     print(f"{repo}: {s['open']} open PRs -> {s['groups']} groups ({s['highGroups']} high confidence), "
           f"{s['prsInGroups']} PRs involved, {s['extraHigh']} extra PRs in high-confidence groups, "
-          f"{s['contested']} issues with >1 PR")
+          f"{s['contested']} issues with >1 PR, {s['doneHigh']} open PRs likely redo closed work "
+          f"({s['doneAll']} possible, {s['closedCompared']} closed PRs compared)")
     return {"repo": repo, "generated": out["generated"], **s}
 
 

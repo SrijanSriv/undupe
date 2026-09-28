@@ -33,7 +33,7 @@ For each group it shows the PRs and asks duplicate / not / skip / open in browse
 ## Layout
 
 - `repos.txt`: the repos undupe tracks
-- `fetch.py`: downloads open PRs to `data/<owner>/<repo>/raw.json` (not committed). Cheap fields only; asking for CI status or reviews makes GitHub time out.
+- `fetch.py`: downloads open PRs to `data/<owner>/<repo>/raw.json` and closed PRs to `closed.json` (not committed). Cheap fields only; asking for CI status or reviews makes GitHub time out.
 - `review.py`: record hand-checked verdicts in `verdicts.json`
 - `build.py`: scoring and grouping (thresholds are constants at the top). Writes `site/<owner>/<repo>/data.json` and `index.html`, plus `site/repos.json`.
 - `templates/repo.html`: the per-repo page, copied into each repo folder
@@ -47,6 +47,10 @@ Two PRs are paired when:
 1. they say they fix the same issue ("Fixes #N", or "(#N)" in the title) **and** their titles or files also agree. A shared issue alone is shown as "possible", since big issues get split into parts;
 2. their titles are near-identical; or
 3. they change the same uncommon files. Each file is weighted by how few PRs touch it, so README.md or core modules count for little.
+
+4. they share a very rare file (e.g. both create `extractors/perl.py`) and a rare title word, and have different authors.
+
+Each open PR is also compared with closed PRs the same way, to find open PRs that redo work already done (the "Already done before?" tab). Many maintainers ship a PR's code in another commit and close it, so "closed" doesn't mean "rejected".
 
 PRs naming different languages (PHP vs Scala) are never paired on files alone. Groups where every PR has the same author are labelled "Same author" (a resubmission, not two people duplicating effort).
 
