@@ -2,7 +2,13 @@
  "Graphify-Labs/graphify": {
   "1068-1125": {
    "by": "claude (read titles and PR descriptions, not full diffs)",
+   "checked": "PR titles and descriptions; diffs not read",
    "date": "2026-09-28",
+   "evidence": "metadata",
+   "links": [
+    "https://github.com/Graphify-Labs/graphify/pull/1068",
+    "https://github.com/Graphify-Labs/graphify/pull/1125"
+   ],
    "note": "already done in a closed PR",
    "prs": [
     1068,
@@ -12,7 +18,13 @@
   },
   "1134-2160": {
    "by": "claude (read titles and PR descriptions, not full diffs)",
+   "checked": "PR titles and descriptions; diffs not read",
    "date": "2026-09-28",
+   "evidence": "metadata",
+   "links": [
+    "https://github.com/Graphify-Labs/graphify/pull/1134",
+    "https://github.com/Graphify-Labs/graphify/pull/2160"
+   ],
    "note": "",
    "prs": [
     1134,
@@ -22,7 +34,13 @@
   },
   "1185-2371": {
    "by": "claude (read titles and PR descriptions, not full diffs)",
+   "checked": "PR titles and descriptions; diffs not read",
    "date": "2026-09-28",
+   "evidence": "metadata",
+   "links": [
+    "https://github.com/Graphify-Labs/graphify/pull/1185",
+    "https://github.com/Graphify-Labs/graphify/pull/2371"
+   ],
    "note": "",
    "prs": [
     1185,
@@ -32,7 +50,14 @@
   },
   "1242-3750": {
    "by": "claude (read titles and PR descriptions, not full diffs)",
+   "checked": "PR titles and descriptions; diffs not read",
    "date": "2026-09-28",
+   "evidence": "metadata",
+   "links": [
+    "https://github.com/Graphify-Labs/graphify/pull/1242",
+    "https://github.com/Graphify-Labs/graphify/pull/1929",
+    "https://github.com/Graphify-Labs/graphify/pull/3750"
+   ],
    "note": "",
    "prs": [
     1242,
@@ -43,7 +68,13 @@
   },
   "1333-1541": {
    "by": "claude (read titles and PR descriptions, not full diffs)",
+   "checked": "PR titles and descriptions; diffs not read",
    "date": "2026-09-28",
+   "evidence": "metadata",
+   "links": [
+    "https://github.com/Graphify-Labs/graphify/pull/1333",
+    "https://github.com/Graphify-Labs/graphify/pull/1541"
+   ],
    "note": "already done in a closed PR",
    "prs": [
     1333,
@@ -53,7 +84,14 @@
   },
   "1367-1874": {
    "by": "claude (read titles and PR descriptions, not full diffs)",
+   "checked": "PR titles and descriptions; diffs not read",
    "date": "2026-09-28",
+   "evidence": "metadata",
+   "links": [
+    "https://github.com/Graphify-Labs/graphify/pull/707",
+    "https://github.com/Graphify-Labs/graphify/pull/1367",
+    "https://github.com/Graphify-Labs/graphify/pull/1874"
+   ],
    "note": "",
    "prs": [
     707,
@@ -64,7 +102,13 @@
   },
   "1549-2317": {
    "by": "claude (read titles and PR descriptions, not full diffs)",
+   "checked": "PR titles and descriptions; diffs not read",
    "date": "2026-09-28",
+   "evidence": "metadata",
+   "links": [
+    "https://github.com/Graphify-Labs/graphify/pull/1549",
+    "https://github.com/Graphify-Labs/graphify/pull/2317"
+   ],
    "note": "",
    "prs": [
     1549,
@@ -74,7 +118,13 @@
   },
   "167-292": {
    "by": "claude (read titles and PR descriptions, not full diffs)",
+   "checked": "PR titles and descriptions; diffs not read",
    "date": "2026-09-28",
+   "evidence": "metadata",
+   "links": [
+    "https://github.com/Graphify-Labs/graphify/pull/167",
+    "https://github.com/Graphify-Labs/graphify/pull/292"
+   ],
    "note": "already done in a closed PR",
    "prs": [
     167,
@@ -84,7 +134,14 @@
   },
   "167-3651": {
    "by": "claude (read titles and PR descriptions, not full diffs)",
+   "checked": "PR titles and descriptions; diffs not read",
    "date": "2026-09-28",
+   "evidence": "metadata",
+   "links": [
+    "https://github.com/Graphify-Labs/graphify/pull/167",
+    "https://github.com/Graphify-Labs/graphify/pull/406",
+    "https://github.com/Graphify-Labs/graphify/pull/3651"
+   ],
    "note": "",
    "prs": [
     167,
@@ -95,7 +152,14 @@
   },
   "167-406": {
    "by": "claude (read titles and PR descriptions, not full diffs)",
+   "checked": "PR titles and descriptions; diffs not read",
    "date": "2026-09-28",
+   "evidence": "metadata",
+   "links": [
+    "https://github.com/Graphify-Labs/graphify/pull/167",
+    "https://github.com/Graphify-Labs/graphify/pull/406",
+    "https://github.com/Graphify-Labs/graphify/pull/3651"
+   ],
    "note": "",
    "prs": [
     167,
@@ -104,9 +168,32 @@
    ],
    "verdict": "duplicate"
   },
+  "1773-3195": {
+   "by": "SrijanSriv",
+   "checked": "PR descriptions and the code diff of graphify/extract.py. Tests not run; generated/expected files and the rest of each diff not read.",
+   "date": "2026-09-30",
+   "evidence": "diff",
+   "links": [
+    "https://github.com/Graphify-Labs/graphify/pull/1773/files",
+    "https://github.com/Graphify-Labs/graphify/pull/3195/files"
+   ],
+   "note": "Different features on the Python comment/docstring pass: #1773 makes concept nodes and `satisfies` edges for IDs like SAFE-04; #3195 makes doc_ref nodes for ADR/RFC. Overlap risk: #1773's regex ([A-Z][A-Z0-9_]*-\\d+) also matches ADR-0011 and RFC-793, so one comment could yield both a requirement node and a doc_ref node. #1773 also defines _REQUIREMENT_ID_RE twice.",
+   "prs": [
+    1773,
+    3195
+   ],
+   "verdict": "not-duplicate"
+  },
   "1788-3013": {
    "by": "claude (read titles and PR descriptions, not full diffs)",
+   "checked": "PR titles and descriptions; diffs not read",
    "date": "2026-09-28",
+   "evidence": "metadata",
+   "links": [
+    "https://github.com/Graphify-Labs/graphify/pull/1788",
+    "https://github.com/Graphify-Labs/graphify/pull/3013",
+    "https://github.com/Graphify-Labs/graphify/pull/3783"
+   ],
    "note": "#3013 is a slice of #1788 (same author); #3783 is an independent Perl extractor",
    "prs": [
     1788,
@@ -117,7 +204,14 @@
   },
   "1788-3783": {
    "by": "claude (read titles and PR descriptions, not full diffs)",
+   "checked": "PR titles and descriptions; diffs not read",
    "date": "2026-09-28",
+   "evidence": "metadata",
+   "links": [
+    "https://github.com/Graphify-Labs/graphify/pull/1788",
+    "https://github.com/Graphify-Labs/graphify/pull/3013",
+    "https://github.com/Graphify-Labs/graphify/pull/3783"
+   ],
    "note": "#3013 is a slice of #1788 (same author); #3783 is an independent Perl extractor",
    "prs": [
     1788,
@@ -128,7 +222,14 @@
   },
   "1813-2912": {
    "by": "claude (read titles and PR descriptions, not full diffs)",
+   "checked": "PR titles and descriptions; diffs not read",
    "date": "2026-09-28",
+   "evidence": "metadata",
+   "links": [
+    "https://github.com/Graphify-Labs/graphify/pull/1813",
+    "https://github.com/Graphify-Labs/graphify/pull/2912",
+    "https://github.com/Graphify-Labs/graphify/pull/2968"
+   ],
    "note": "#1813 only does the error-message half; #2912 and #2968 are full alternatives",
    "prs": [
     1813,
@@ -139,7 +240,13 @@
   },
   "1827-1848": {
    "by": "claude (read titles and PR descriptions, not full diffs)",
+   "checked": "PR titles and descriptions; diffs not read",
    "date": "2026-09-28",
+   "evidence": "metadata",
+   "links": [
+    "https://github.com/Graphify-Labs/graphify/pull/1827",
+    "https://github.com/Graphify-Labs/graphify/pull/1848"
+   ],
    "note": "",
    "prs": [
     1827,
@@ -149,7 +256,13 @@
   },
   "1842-2715": {
    "by": "claude (read titles and PR descriptions, not full diffs)",
+   "checked": "PR titles and descriptions; diffs not read",
    "date": "2026-09-28",
+   "evidence": "metadata",
+   "links": [
+    "https://github.com/Graphify-Labs/graphify/pull/1842",
+    "https://github.com/Graphify-Labs/graphify/pull/2715"
+   ],
    "note": "#1842 adds a read_source MCP tool; #2715 flags MCP errors",
    "prs": [
     1842,
@@ -159,7 +272,13 @@
   },
   "1842-3273": {
    "by": "claude (read titles and PR descriptions, not full diffs)",
+   "checked": "PR titles and descriptions; diffs not read",
    "date": "2026-09-28",
+   "evidence": "metadata",
+   "links": [
+    "https://github.com/Graphify-Labs/graphify/pull/1842",
+    "https://github.com/Graphify-Labs/graphify/pull/3273"
+   ],
    "note": "",
    "prs": [
     1842,
@@ -169,7 +288,14 @@
   },
   "1845-1877": {
    "by": "claude (read titles and PR descriptions, not full diffs)",
+   "checked": "PR titles and descriptions; diffs not read",
    "date": "2026-09-28",
+   "evidence": "metadata",
+   "links": [
+    "https://github.com/Graphify-Labs/graphify/pull/1845",
+    "https://github.com/Graphify-Labs/graphify/pull/1877",
+    "https://github.com/Graphify-Labs/graphify/pull/3634"
+   ],
    "note": "",
    "prs": [
     1845,
@@ -180,7 +306,13 @@
   },
   "1845-1936": {
    "by": "claude (read titles and PR descriptions, not full diffs)",
+   "checked": "PR titles and descriptions; diffs not read",
    "date": "2026-09-28",
+   "evidence": "metadata",
+   "links": [
+    "https://github.com/Graphify-Labs/graphify/pull/1845",
+    "https://github.com/Graphify-Labs/graphify/pull/1936"
+   ],
    "note": "already done in a closed PR",
    "prs": [
     1845,
@@ -190,7 +322,14 @@
   },
   "1845-3634": {
    "by": "claude (read titles and PR descriptions, not full diffs)",
+   "checked": "PR titles and descriptions; diffs not read",
    "date": "2026-09-28",
+   "evidence": "metadata",
+   "links": [
+    "https://github.com/Graphify-Labs/graphify/pull/1845",
+    "https://github.com/Graphify-Labs/graphify/pull/1877",
+    "https://github.com/Graphify-Labs/graphify/pull/3634"
+   ],
    "note": "",
    "prs": [
     1845,
@@ -201,7 +340,13 @@
   },
   "1866-1878": {
    "by": "claude (read titles and PR descriptions, not full diffs)",
+   "checked": "PR titles and descriptions; diffs not read",
    "date": "2026-09-28",
+   "evidence": "metadata",
+   "links": [
+    "https://github.com/Graphify-Labs/graphify/pull/1866",
+    "https://github.com/Graphify-Labs/graphify/pull/1878"
+   ],
    "note": "already done in a closed PR",
    "prs": [
     1866,
@@ -211,7 +356,13 @@
   },
   "1874-3716": {
    "by": "claude (read titles and PR descriptions, not full diffs)",
+   "checked": "PR titles and descriptions; diffs not read",
    "date": "2026-09-28",
+   "evidence": "metadata",
+   "links": [
+    "https://github.com/Graphify-Labs/graphify/pull/1874",
+    "https://github.com/Graphify-Labs/graphify/pull/3716"
+   ],
    "note": "already done in a closed PR",
    "prs": [
     1874,
@@ -221,7 +372,13 @@
   },
   "1877-1936": {
    "by": "claude (read titles and PR descriptions, not full diffs)",
+   "checked": "PR titles and descriptions; diffs not read",
    "date": "2026-09-28",
+   "evidence": "metadata",
+   "links": [
+    "https://github.com/Graphify-Labs/graphify/pull/1877",
+    "https://github.com/Graphify-Labs/graphify/pull/1936"
+   ],
    "note": "already done in a closed PR",
    "prs": [
     1877,
@@ -231,7 +388,14 @@
   },
   "1877-3634": {
    "by": "claude (read titles and PR descriptions, not full diffs)",
+   "checked": "PR titles and descriptions; diffs not read",
    "date": "2026-09-28",
+   "evidence": "metadata",
+   "links": [
+    "https://github.com/Graphify-Labs/graphify/pull/1845",
+    "https://github.com/Graphify-Labs/graphify/pull/1877",
+    "https://github.com/Graphify-Labs/graphify/pull/3634"
+   ],
    "note": "",
    "prs": [
     1845,
@@ -242,7 +406,13 @@
   },
   "192-1439": {
    "by": "claude (read titles and PR descriptions, not full diffs)",
+   "checked": "PR titles and descriptions; diffs not read",
    "date": "2026-09-28",
+   "evidence": "metadata",
+   "links": [
+    "https://github.com/Graphify-Labs/graphify/pull/192",
+    "https://github.com/Graphify-Labs/graphify/pull/1439"
+   ],
    "note": "",
    "prs": [
     192,
@@ -252,7 +422,14 @@
   },
   "1929-3750": {
    "by": "claude (read titles and PR descriptions, not full diffs)",
+   "checked": "PR titles and descriptions; diffs not read",
    "date": "2026-09-28",
+   "evidence": "metadata",
+   "links": [
+    "https://github.com/Graphify-Labs/graphify/pull/1242",
+    "https://github.com/Graphify-Labs/graphify/pull/1929",
+    "https://github.com/Graphify-Labs/graphify/pull/3750"
+   ],
    "note": "",
    "prs": [
     1242,
@@ -263,7 +440,13 @@
   },
   "1936-3634": {
    "by": "claude (read titles and PR descriptions, not full diffs)",
+   "checked": "PR titles and descriptions; diffs not read",
    "date": "2026-09-28",
+   "evidence": "metadata",
+   "links": [
+    "https://github.com/Graphify-Labs/graphify/pull/3634",
+    "https://github.com/Graphify-Labs/graphify/pull/1936"
+   ],
    "note": "already done in a closed PR",
    "prs": [
     3634,
@@ -273,7 +456,13 @@
   },
   "1966-2019": {
    "by": "claude (read titles and PR descriptions, not full diffs)",
+   "checked": "PR titles and descriptions; diffs not read",
    "date": "2026-09-28",
+   "evidence": "metadata",
+   "links": [
+    "https://github.com/Graphify-Labs/graphify/pull/1966",
+    "https://github.com/Graphify-Labs/graphify/pull/2019"
+   ],
    "note": "already done in a closed PR",
    "prs": [
     1966,
@@ -283,7 +472,13 @@
   },
   "1993-2131": {
    "by": "claude (read titles and PR descriptions, not full diffs)",
+   "checked": "PR titles and descriptions; diffs not read",
    "date": "2026-09-28",
+   "evidence": "metadata",
+   "links": [
+    "https://github.com/Graphify-Labs/graphify/pull/1993",
+    "https://github.com/Graphify-Labs/graphify/pull/2131"
+   ],
    "note": "",
    "prs": [
     1993,
@@ -293,7 +488,13 @@
   },
   "2001-2240": {
    "by": "claude (read titles and PR descriptions, not full diffs)",
+   "checked": "PR titles and descriptions; diffs not read",
    "date": "2026-09-28",
+   "evidence": "metadata",
+   "links": [
+    "https://github.com/Graphify-Labs/graphify/pull/2001",
+    "https://github.com/Graphify-Labs/graphify/pull/2240"
+   ],
    "note": "#2240 also adds SCSS",
    "prs": [
     2001,
@@ -303,7 +504,13 @@
   },
   "2013-2275": {
    "by": "claude (read titles and PR descriptions, not full diffs)",
+   "checked": "PR titles and descriptions; diffs not read",
    "date": "2026-09-28",
+   "evidence": "metadata",
+   "links": [
+    "https://github.com/Graphify-Labs/graphify/pull/2013",
+    "https://github.com/Graphify-Labs/graphify/pull/2275"
+   ],
    "note": "",
    "prs": [
     2013,
@@ -313,7 +520,13 @@
   },
   "2064-3635": {
    "by": "claude (read titles and PR descriptions, not full diffs)",
+   "checked": "PR titles and descriptions; diffs not read",
    "date": "2026-09-28",
+   "evidence": "metadata",
+   "links": [
+    "https://github.com/Graphify-Labs/graphify/pull/2064",
+    "https://github.com/Graphify-Labs/graphify/pull/3635"
+   ],
    "note": "",
    "prs": [
     2064,
@@ -321,9 +534,31 @@
    ],
    "verdict": "duplicate"
   },
+  "2103-3755": {
+   "by": "SrijanSriv",
+   "checked": "PR descriptions and the code diff of graphify/llm.py (_label_batch_with_retry). Tests not run; generated/expected files and the rest of each diff not read.",
+   "date": "2026-09-30",
+   "evidence": "diff",
+   "links": [
+    "https://github.com/Graphify-Labs/graphify/pull/2103/files",
+    "https://github.com/Graphify-Labs/graphify/pull/3755/files"
+   ],
+   "note": "Same retry-budget starvation theme, different mechanisms. #2103 sets a 512-token floor (covers truncated but non-empty JSON on small batches). #3755 doubles the budget on a blank completion, for reasoning models (#3747), and splits at once on non-empty malformed output. Not the same change; both edit the same max_tokens lines so they conflict, and combining them is plausible.",
+   "prs": [
+    2103,
+    3755
+   ],
+   "verdict": "not-duplicate"
+  },
   "2117-2373": {
    "by": "claude (read titles and PR descriptions, not full diffs)",
+   "checked": "PR titles and descriptions; diffs not read",
    "date": "2026-09-28",
+   "evidence": "metadata",
+   "links": [
+    "https://github.com/Graphify-Labs/graphify/pull/2117",
+    "https://github.com/Graphify-Labs/graphify/pull/2373"
+   ],
    "note": "",
    "prs": [
     2117,
@@ -333,7 +568,13 @@
   },
   "214-574": {
    "by": "claude (read titles and PR descriptions, not full diffs)",
+   "checked": "PR titles and descriptions; diffs not read",
    "date": "2026-09-28",
+   "evidence": "metadata",
+   "links": [
+    "https://github.com/Graphify-Labs/graphify/pull/214",
+    "https://github.com/Graphify-Labs/graphify/pull/574"
+   ],
    "note": "",
    "prs": [
     214,
@@ -343,7 +584,13 @@
   },
   "2146-2150": {
    "by": "claude (read titles and PR descriptions, not full diffs)",
+   "checked": "PR titles and descriptions; diffs not read",
    "date": "2026-09-28",
+   "evidence": "metadata",
+   "links": [
+    "https://github.com/Graphify-Labs/graphify/pull/2146",
+    "https://github.com/Graphify-Labs/graphify/pull/2150"
+   ],
    "note": "",
    "prs": [
     2146,
@@ -353,7 +600,14 @@
   },
   "2203-3767": {
    "by": "claude (read titles and PR descriptions, not full diffs)",
+   "checked": "PR titles and descriptions; diffs not read",
    "date": "2026-09-28",
+   "evidence": "metadata",
+   "links": [
+    "https://github.com/Graphify-Labs/graphify/pull/816",
+    "https://github.com/Graphify-Labs/graphify/pull/2203",
+    "https://github.com/Graphify-Labs/graphify/pull/3767"
+   ],
    "note": "",
    "prs": [
     816,
@@ -364,7 +618,13 @@
   },
   "2294-3288": {
    "by": "claude (read titles and PR descriptions, not full diffs)",
+   "checked": "PR titles and descriptions; diffs not read",
    "date": "2026-09-28",
+   "evidence": "metadata",
+   "links": [
+    "https://github.com/Graphify-Labs/graphify/pull/2294",
+    "https://github.com/Graphify-Labs/graphify/pull/3288"
+   ],
    "note": "already done in a closed PR",
    "prs": [
     2294,
@@ -374,7 +634,13 @@
   },
   "231-233": {
    "by": "claude (read titles and PR descriptions, not full diffs)",
+   "checked": "PR titles and descriptions; diffs not read",
    "date": "2026-09-28",
+   "evidence": "metadata",
+   "links": [
+    "https://github.com/Graphify-Labs/graphify/pull/231",
+    "https://github.com/Graphify-Labs/graphify/pull/233"
+   ],
    "note": "",
    "prs": [
     231,
@@ -384,7 +650,13 @@
   },
   "2322-3710": {
    "by": "claude (read titles and PR descriptions, not full diffs)",
+   "checked": "PR titles and descriptions; diffs not read",
    "date": "2026-09-28",
+   "evidence": "metadata",
+   "links": [
+    "https://github.com/Graphify-Labs/graphify/pull/2322",
+    "https://github.com/Graphify-Labs/graphify/pull/3710"
+   ],
    "note": "",
    "prs": [
     2322,
@@ -394,7 +666,13 @@
   },
   "2355-3591": {
    "by": "claude (read titles and PR descriptions, not full diffs)",
+   "checked": "PR titles and descriptions; diffs not read",
    "date": "2026-09-28",
+   "evidence": "metadata",
+   "links": [
+    "https://github.com/Graphify-Labs/graphify/pull/2355",
+    "https://github.com/Graphify-Labs/graphify/pull/3591"
+   ],
    "note": "",
    "prs": [
     2355,
@@ -404,7 +682,13 @@
   },
   "2382-3589": {
    "by": "claude (read titles and PR descriptions, not full diffs)",
+   "checked": "PR titles and descriptions; diffs not read",
    "date": "2026-09-28",
+   "evidence": "metadata",
+   "links": [
+    "https://github.com/Graphify-Labs/graphify/pull/2382",
+    "https://github.com/Graphify-Labs/graphify/pull/3589"
+   ],
    "note": "",
    "prs": [
     2382,
@@ -414,7 +698,14 @@
   },
   "2392-3136": {
    "by": "claude (read titles and PR descriptions, not full diffs)",
+   "checked": "PR titles and descriptions; diffs not read",
    "date": "2026-09-28",
+   "evidence": "metadata",
+   "links": [
+    "https://github.com/Graphify-Labs/graphify/pull/2392",
+    "https://github.com/Graphify-Labs/graphify/pull/3136",
+    "https://github.com/Graphify-Labs/graphify/pull/3167"
+   ],
    "note": "#3136 replaces #2392; #3167 replaces #3136",
    "prs": [
     2392,
@@ -425,7 +716,14 @@
   },
   "2392-3167": {
    "by": "claude (read titles and PR descriptions, not full diffs)",
+   "checked": "PR titles and descriptions; diffs not read",
    "date": "2026-09-28",
+   "evidence": "metadata",
+   "links": [
+    "https://github.com/Graphify-Labs/graphify/pull/2392",
+    "https://github.com/Graphify-Labs/graphify/pull/3136",
+    "https://github.com/Graphify-Labs/graphify/pull/3167"
+   ],
    "note": "#3136 replaces #2392; #3167 replaces #3136",
    "prs": [
     2392,
@@ -436,7 +734,13 @@
   },
   "2396-2399": {
    "by": "claude (read titles and PR descriptions, not full diffs)",
+   "checked": "PR titles and descriptions; diffs not read",
    "date": "2026-09-28",
+   "evidence": "metadata",
+   "links": [
+    "https://github.com/Graphify-Labs/graphify/pull/2396",
+    "https://github.com/Graphify-Labs/graphify/pull/2399"
+   ],
    "note": "",
    "prs": [
     2396,
@@ -446,7 +750,13 @@
   },
   "2397-2400": {
    "by": "claude (read titles and PR descriptions, not full diffs)",
+   "checked": "PR titles and descriptions; diffs not read",
    "date": "2026-09-28",
+   "evidence": "metadata",
+   "links": [
+    "https://github.com/Graphify-Labs/graphify/pull/2397",
+    "https://github.com/Graphify-Labs/graphify/pull/2400"
+   ],
    "note": "",
    "prs": [
     2397,
@@ -456,7 +766,13 @@
   },
   "2429-2946": {
    "by": "claude (read titles and PR descriptions, not full diffs)",
+   "checked": "PR titles and descriptions; diffs not read",
    "date": "2026-09-28",
+   "evidence": "metadata",
+   "links": [
+    "https://github.com/Graphify-Labs/graphify/pull/2429",
+    "https://github.com/Graphify-Labs/graphify/pull/2946"
+   ],
    "note": "",
    "prs": [
     2429,
@@ -466,7 +782,13 @@
   },
   "2627-2764": {
    "by": "claude (read titles and PR descriptions, not full diffs)",
+   "checked": "PR titles and descriptions; diffs not read",
    "date": "2026-09-28",
+   "evidence": "metadata",
+   "links": [
+    "https://github.com/Graphify-Labs/graphify/pull/2764",
+    "https://github.com/Graphify-Labs/graphify/pull/2627"
+   ],
    "note": "already done in a closed PR",
    "prs": [
     2764,
@@ -476,7 +798,13 @@
   },
   "2678-2679": {
    "by": "claude (read titles and PR descriptions, not full diffs)",
+   "checked": "PR titles and descriptions; diffs not read",
    "date": "2026-09-28",
+   "evidence": "metadata",
+   "links": [
+    "https://github.com/Graphify-Labs/graphify/pull/2678",
+    "https://github.com/Graphify-Labs/graphify/pull/2679"
+   ],
    "note": "",
    "prs": [
     2678,
@@ -486,7 +814,13 @@
   },
   "2701-3207": {
    "by": "claude (read titles and PR descriptions, not full diffs)",
+   "checked": "PR titles and descriptions; diffs not read",
    "date": "2026-09-28",
+   "evidence": "metadata",
+   "links": [
+    "https://github.com/Graphify-Labs/graphify/pull/2701",
+    "https://github.com/Graphify-Labs/graphify/pull/3207"
+   ],
    "note": "#3207 does the same fix plus .graphifyrc output-path resolution",
    "prs": [
     2701,
@@ -496,7 +830,13 @@
   },
   "2715-2725": {
    "by": "claude (read titles and PR descriptions, not full diffs)",
+   "checked": "PR titles and descriptions; diffs not read",
    "date": "2026-09-28",
+   "evidence": "metadata",
+   "links": [
+    "https://github.com/Graphify-Labs/graphify/pull/2715",
+    "https://github.com/Graphify-Labs/graphify/pull/2725"
+   ],
    "note": "",
    "prs": [
     2715,
@@ -506,7 +846,13 @@
   },
   "2716-2723": {
    "by": "claude (read titles and PR descriptions, not full diffs)",
+   "checked": "PR titles and descriptions; diffs not read",
    "date": "2026-09-28",
+   "evidence": "metadata",
+   "links": [
+    "https://github.com/Graphify-Labs/graphify/pull/2716",
+    "https://github.com/Graphify-Labs/graphify/pull/2723"
+   ],
    "note": "#2716 also fixes #2713 and #2714",
    "prs": [
     2716,
@@ -516,7 +862,13 @@
   },
   "2726-3618": {
    "by": "claude (read titles and PR descriptions, not full diffs)",
+   "checked": "PR titles and descriptions; diffs not read",
    "date": "2026-09-28",
+   "evidence": "metadata",
+   "links": [
+    "https://github.com/Graphify-Labs/graphify/pull/2726",
+    "https://github.com/Graphify-Labs/graphify/pull/3618"
+   ],
    "note": "",
    "prs": [
     2726,
@@ -526,7 +878,13 @@
   },
   "2797-2801": {
    "by": "claude (read titles and PR descriptions, not full diffs)",
+   "checked": "PR titles and descriptions; diffs not read",
    "date": "2026-09-28",
+   "evidence": "metadata",
+   "links": [
+    "https://github.com/Graphify-Labs/graphify/pull/2797",
+    "https://github.com/Graphify-Labs/graphify/pull/2801"
+   ],
    "note": "#2801 says it is an alternative to #2797",
    "prs": [
     2797,
@@ -536,7 +894,13 @@
   },
   "2806-2909": {
    "by": "claude (read titles and PR descriptions, not full diffs)",
+   "checked": "PR titles and descriptions; diffs not read",
    "date": "2026-09-28",
+   "evidence": "metadata",
+   "links": [
+    "https://github.com/Graphify-Labs/graphify/pull/2806",
+    "https://github.com/Graphify-Labs/graphify/pull/2909"
+   ],
    "note": "",
    "prs": [
     2806,
@@ -546,7 +910,13 @@
   },
   "2893-3766": {
    "by": "claude (read titles and PR descriptions, not full diffs)",
+   "checked": "PR titles and descriptions; diffs not read",
    "date": "2026-09-28",
+   "evidence": "metadata",
+   "links": [
+    "https://github.com/Graphify-Labs/graphify/pull/2893",
+    "https://github.com/Graphify-Labs/graphify/pull/3766"
+   ],
    "note": "",
    "prs": [
     2893,
@@ -554,9 +924,32 @@
    ],
    "verdict": "not-duplicate"
   },
+  "2896-2966": {
+   "by": "SrijanSriv",
+   "checked": "PR descriptions and the code diff of Skill update runbook fragment (tools/skillgen/fragments/references/shared/update.md). Tests not run; generated/expected files and the rest of each diff not read.",
+   "date": "2026-09-30",
+   "evidence": "diff",
+   "links": [
+    "https://github.com/Graphify-Labs/graphify/pull/2896/files",
+    "https://github.com/Graphify-Labs/graphify/pull/2966/files"
+   ],
+   "note": "Same runbook block, different bugs. #2896 moves the manifest stamping before build_merge() mutates the extraction. #2966 (fixes #2844) changes the input to the semantic-only .graphify_semantic.json so heading-only markdown isn't stamped. Neither fix contains the other, but they edit adjacent lines and will conflict; likely both are needed, in one merged change.",
+   "prs": [
+    2896,
+    2966
+   ],
+   "verdict": "not-duplicate"
+  },
   "2912-2968": {
    "by": "claude (read titles and PR descriptions, not full diffs)",
+   "checked": "PR titles and descriptions; diffs not read",
    "date": "2026-09-28",
+   "evidence": "metadata",
+   "links": [
+    "https://github.com/Graphify-Labs/graphify/pull/1813",
+    "https://github.com/Graphify-Labs/graphify/pull/2912",
+    "https://github.com/Graphify-Labs/graphify/pull/2968"
+   ],
    "note": "#1813 only does the error-message half; #2912 and #2968 are full alternatives",
    "prs": [
     1813,
@@ -567,7 +960,13 @@
   },
   "2924-3594": {
    "by": "claude (read titles and PR descriptions, not full diffs)",
+   "checked": "PR titles and descriptions; diffs not read",
    "date": "2026-09-28",
+   "evidence": "metadata",
+   "links": [
+    "https://github.com/Graphify-Labs/graphify/pull/2924",
+    "https://github.com/Graphify-Labs/graphify/pull/3594"
+   ],
    "note": "",
    "prs": [
     2924,
@@ -577,7 +976,13 @@
   },
   "2933-2956": {
    "by": "claude (read titles and PR descriptions, not full diffs)",
+   "checked": "PR titles and descriptions; diffs not read",
    "date": "2026-09-28",
+   "evidence": "metadata",
+   "links": [
+    "https://github.com/Graphify-Labs/graphify/pull/2956",
+    "https://github.com/Graphify-Labs/graphify/pull/2933"
+   ],
    "note": "already done in a closed PR",
    "prs": [
     2956,
@@ -587,7 +992,13 @@
   },
   "2965-2967": {
    "by": "claude (read titles and PR descriptions, not full diffs)",
+   "checked": "PR titles and descriptions; diffs not read",
    "date": "2026-09-28",
+   "evidence": "metadata",
+   "links": [
+    "https://github.com/Graphify-Labs/graphify/pull/2965",
+    "https://github.com/Graphify-Labs/graphify/pull/2967"
+   ],
    "note": "already done in a closed PR",
    "prs": [
     2965,
@@ -597,7 +1008,14 @@
   },
   "3013-3783": {
    "by": "claude (read titles and PR descriptions, not full diffs)",
+   "checked": "PR titles and descriptions; diffs not read",
    "date": "2026-09-28",
+   "evidence": "metadata",
+   "links": [
+    "https://github.com/Graphify-Labs/graphify/pull/1788",
+    "https://github.com/Graphify-Labs/graphify/pull/3013",
+    "https://github.com/Graphify-Labs/graphify/pull/3783"
+   ],
    "note": "#3013 is a slice of #1788 (same author); #3783 is an independent Perl extractor",
    "prs": [
     1788,
@@ -608,7 +1026,13 @@
   },
   "3031-3076": {
    "by": "claude (read titles and PR descriptions, not full diffs)",
+   "checked": "PR titles and descriptions; diffs not read",
    "date": "2026-09-28",
+   "evidence": "metadata",
+   "links": [
+    "https://github.com/Graphify-Labs/graphify/pull/3031",
+    "https://github.com/Graphify-Labs/graphify/pull/3076"
+   ],
    "note": "",
    "prs": [
     3031,
@@ -618,7 +1042,13 @@
   },
   "3038-3095": {
    "by": "claude (read titles and PR descriptions, not full diffs)",
+   "checked": "PR titles and descriptions; diffs not read",
    "date": "2026-09-28",
+   "evidence": "metadata",
+   "links": [
+    "https://github.com/Graphify-Labs/graphify/pull/3095",
+    "https://github.com/Graphify-Labs/graphify/pull/3038"
+   ],
    "note": "already done in a closed PR",
    "prs": [
     3095,
@@ -628,7 +1058,13 @@
   },
   "3046-3245": {
    "by": "claude (read titles and PR descriptions, not full diffs)",
+   "checked": "PR titles and descriptions; diffs not read",
    "date": "2026-09-28",
+   "evidence": "metadata",
+   "links": [
+    "https://github.com/Graphify-Labs/graphify/pull/3245",
+    "https://github.com/Graphify-Labs/graphify/pull/3046"
+   ],
    "note": "already done in a closed PR",
    "prs": [
     3245,
@@ -638,7 +1074,13 @@
   },
   "3054-3633": {
    "by": "claude (read titles and PR descriptions, not full diffs)",
+   "checked": "PR titles and descriptions; diffs not read",
    "date": "2026-09-28",
+   "evidence": "metadata",
+   "links": [
+    "https://github.com/Graphify-Labs/graphify/pull/3054",
+    "https://github.com/Graphify-Labs/graphify/pull/3633"
+   ],
    "note": "",
    "prs": [
     3054,
@@ -648,7 +1090,13 @@
   },
   "3075-3789": {
    "by": "claude (read titles and PR descriptions, not full diffs)",
+   "checked": "PR titles and descriptions; diffs not read",
    "date": "2026-09-28",
+   "evidence": "metadata",
+   "links": [
+    "https://github.com/Graphify-Labs/graphify/pull/3075",
+    "https://github.com/Graphify-Labs/graphify/pull/3789"
+   ],
    "note": "#3789 carries #3075 forward onto v8",
    "prs": [
     3075,
@@ -658,7 +1106,14 @@
   },
   "3136-3167": {
    "by": "claude (read titles and PR descriptions, not full diffs)",
+   "checked": "PR titles and descriptions; diffs not read",
    "date": "2026-09-28",
+   "evidence": "metadata",
+   "links": [
+    "https://github.com/Graphify-Labs/graphify/pull/2392",
+    "https://github.com/Graphify-Labs/graphify/pull/3136",
+    "https://github.com/Graphify-Labs/graphify/pull/3167"
+   ],
    "note": "#3136 replaces #2392; #3167 replaces #3136",
    "prs": [
     2392,
@@ -669,7 +1124,13 @@
   },
   "3149-3268": {
    "by": "claude (read titles and PR descriptions, not full diffs)",
+   "checked": "PR titles and descriptions; diffs not read",
    "date": "2026-09-28",
+   "evidence": "metadata",
+   "links": [
+    "https://github.com/Graphify-Labs/graphify/pull/3268",
+    "https://github.com/Graphify-Labs/graphify/pull/3149"
+   ],
    "note": "#3268 does the non --project half that #3149 deliberately left out",
    "prs": [
     3268,
@@ -679,7 +1140,13 @@
   },
   "3218-3276": {
    "by": "claude (read titles and PR descriptions, not full diffs)",
+   "checked": "PR titles and descriptions; diffs not read",
    "date": "2026-09-28",
+   "evidence": "metadata",
+   "links": [
+    "https://github.com/Graphify-Labs/graphify/pull/3218",
+    "https://github.com/Graphify-Labs/graphify/pull/3276"
+   ],
    "note": "",
    "prs": [
     3218,
@@ -689,7 +1156,13 @@
   },
   "3348-3450": {
    "by": "claude (read titles and PR descriptions, not full diffs)",
+   "checked": "PR titles and descriptions; diffs not read",
    "date": "2026-09-28",
+   "evidence": "metadata",
+   "links": [
+    "https://github.com/Graphify-Labs/graphify/pull/3348",
+    "https://github.com/Graphify-Labs/graphify/pull/3450"
+   ],
    "note": "",
    "prs": [
     3348,
@@ -699,7 +1172,13 @@
   },
   "3364-3449": {
    "by": "claude (read titles and PR descriptions, not full diffs)",
+   "checked": "PR titles and descriptions; diffs not read",
    "date": "2026-09-28",
+   "evidence": "metadata",
+   "links": [
+    "https://github.com/Graphify-Labs/graphify/pull/3364",
+    "https://github.com/Graphify-Labs/graphify/pull/3449"
+   ],
    "note": "",
    "prs": [
     3364,
@@ -709,7 +1188,13 @@
   },
   "3367-3383": {
    "by": "claude (read titles and PR descriptions, not full diffs)",
+   "checked": "PR titles and descriptions; diffs not read",
    "date": "2026-09-28",
+   "evidence": "metadata",
+   "links": [
+    "https://github.com/Graphify-Labs/graphify/pull/3383",
+    "https://github.com/Graphify-Labs/graphify/pull/3367"
+   ],
    "note": "already done in a closed PR",
    "prs": [
     3383,
@@ -719,7 +1204,13 @@
   },
   "3385-3387": {
    "by": "claude (read titles and PR descriptions, not full diffs)",
+   "checked": "PR titles and descriptions; diffs not read",
    "date": "2026-09-28",
+   "evidence": "metadata",
+   "links": [
+    "https://github.com/Graphify-Labs/graphify/pull/3385",
+    "https://github.com/Graphify-Labs/graphify/pull/3387"
+   ],
    "note": "",
    "prs": [
     3385,
@@ -729,7 +1220,13 @@
   },
   "3403-3456": {
    "by": "claude (read titles and PR descriptions, not full diffs)",
+   "checked": "PR titles and descriptions; diffs not read",
    "date": "2026-09-28",
+   "evidence": "metadata",
+   "links": [
+    "https://github.com/Graphify-Labs/graphify/pull/3403",
+    "https://github.com/Graphify-Labs/graphify/pull/3456"
+   ],
    "note": "",
    "prs": [
     3403,
@@ -739,7 +1236,13 @@
   },
   "3404-3448": {
    "by": "claude (read titles and PR descriptions, not full diffs)",
+   "checked": "PR titles and descriptions; diffs not read",
    "date": "2026-09-28",
+   "evidence": "metadata",
+   "links": [
+    "https://github.com/Graphify-Labs/graphify/pull/3404",
+    "https://github.com/Graphify-Labs/graphify/pull/3448"
+   ],
    "note": "",
    "prs": [
     3404,
@@ -749,7 +1252,13 @@
   },
   "3404-3519": {
    "by": "claude (read titles and PR descriptions, not full diffs)",
+   "checked": "PR titles and descriptions; diffs not read",
    "date": "2026-09-28",
+   "evidence": "metadata",
+   "links": [
+    "https://github.com/Graphify-Labs/graphify/pull/3404",
+    "https://github.com/Graphify-Labs/graphify/pull/3519"
+   ],
    "note": "already done in a closed PR",
    "prs": [
     3404,
@@ -759,7 +1268,13 @@
   },
   "3424-3451": {
    "by": "claude (read titles and PR descriptions, not full diffs)",
+   "checked": "PR titles and descriptions; diffs not read",
    "date": "2026-09-28",
+   "evidence": "metadata",
+   "links": [
+    "https://github.com/Graphify-Labs/graphify/pull/3451",
+    "https://github.com/Graphify-Labs/graphify/pull/3424"
+   ],
    "note": "already done in a closed PR",
    "prs": [
     3451,
@@ -769,7 +1284,13 @@
   },
   "3432-3453": {
    "by": "claude (read titles and PR descriptions, not full diffs)",
+   "checked": "PR titles and descriptions; diffs not read",
    "date": "2026-09-28",
+   "evidence": "metadata",
+   "links": [
+    "https://github.com/Graphify-Labs/graphify/pull/3453",
+    "https://github.com/Graphify-Labs/graphify/pull/3432"
+   ],
    "note": "already done in a closed PR",
    "prs": [
     3453,
@@ -779,7 +1300,13 @@
   },
   "3440-3444": {
    "by": "claude (read titles and PR descriptions, not full diffs)",
+   "checked": "PR titles and descriptions; diffs not read",
    "date": "2026-09-28",
+   "evidence": "metadata",
+   "links": [
+    "https://github.com/Graphify-Labs/graphify/pull/3440",
+    "https://github.com/Graphify-Labs/graphify/pull/3444"
+   ],
    "note": "both also overlap #3434",
    "prs": [
     3440,
@@ -789,7 +1316,13 @@
   },
   "3443-3498": {
    "by": "claude (read titles and PR descriptions, not full diffs)",
+   "checked": "PR titles and descriptions; diffs not read",
    "date": "2026-09-28",
+   "evidence": "metadata",
+   "links": [
+    "https://github.com/Graphify-Labs/graphify/pull/3443",
+    "https://github.com/Graphify-Labs/graphify/pull/3498"
+   ],
    "note": "already done in a closed PR",
    "prs": [
     3443,
@@ -798,18 +1331,50 @@
    "verdict": "duplicate"
   },
   "3443-3788": {
-   "by": "claude (read titles and PR descriptions, not full diffs)",
-   "date": "2026-09-28",
-   "note": "overlapping fixes to the same per-session nudge",
+   "by": "SrijanSriv",
+   "checked": "PR descriptions and the code diff of graphify/cli.py (_run_hook_guard nudge limiting). Tests not run; each diff was read up to its first ~100 lines, and test files were not read.",
+   "date": "2026-09-30",
+   "evidence": "diff",
+   "links": [
+    "https://github.com/Graphify-Labs/graphify/pull/3443/files",
+    "https://github.com/Graphify-Labs/graphify/pull/3788/files",
+    "https://github.com/Graphify-Labs/graphify/pull/3893/files"
+   ],
+   "note": "Competing fixes for the same behavior: the search/read nudge fires on every tool call. #3443 (fixes #3435) caps both nudges at 5 per session; #3788 (fixes #3756) limits only the search nudge to once per session/agent; #3893 says it carries #3443 onto v8 and adds per-agent budgets, citing #3756 too. #3443 and #3893 are the same change (3893 is 3443 plus a follow-up). #3788 differs in policy (once vs cap of 5) and scope. A maintainer should pick one policy; likely #3893 supersedes #3443. (Upgrades the earlier metadata-only record for 3443-3788.)",
    "prs": [
     3443,
-    3788
+    3788,
+    3893
+   ],
+   "verdict": "duplicate"
+  },
+  "3443-3893": {
+   "by": "SrijanSriv",
+   "checked": "PR descriptions and the code diff of graphify/cli.py (_run_hook_guard nudge limiting). Tests not run; each diff was read up to its first ~100 lines, and test files were not read.",
+   "date": "2026-09-30",
+   "evidence": "diff",
+   "links": [
+    "https://github.com/Graphify-Labs/graphify/pull/3443/files",
+    "https://github.com/Graphify-Labs/graphify/pull/3788/files",
+    "https://github.com/Graphify-Labs/graphify/pull/3893/files"
+   ],
+   "note": "Competing fixes for the same behavior: the search/read nudge fires on every tool call. #3443 (fixes #3435) caps both nudges at 5 per session; #3788 (fixes #3756) limits only the search nudge to once per session/agent; #3893 says it carries #3443 onto v8 and adds per-agent budgets, citing #3756 too. #3443 and #3893 are the same change (3893 is 3443 plus a follow-up). #3788 differs in policy (once vs cap of 5) and scope. A maintainer should pick one policy; likely #3893 supersedes #3443. (Upgrades the earlier metadata-only record for 3443-3788.)",
+   "prs": [
+    3443,
+    3788,
+    3893
    ],
    "verdict": "duplicate"
   },
   "3448-3519": {
    "by": "claude (read titles and PR descriptions, not full diffs)",
+   "checked": "PR titles and descriptions; diffs not read",
    "date": "2026-09-28",
+   "evidence": "metadata",
+   "links": [
+    "https://github.com/Graphify-Labs/graphify/pull/3448",
+    "https://github.com/Graphify-Labs/graphify/pull/3519"
+   ],
    "note": "already done in a closed PR",
    "prs": [
     3448,
@@ -819,7 +1384,13 @@
   },
   "3452-3455": {
    "by": "claude (read titles and PR descriptions, not full diffs)",
+   "checked": "PR titles and descriptions; diffs not read",
    "date": "2026-09-28",
+   "evidence": "metadata",
+   "links": [
+    "https://github.com/Graphify-Labs/graphify/pull/3452",
+    "https://github.com/Graphify-Labs/graphify/pull/3455"
+   ],
    "note": "",
    "prs": [
     3452,
@@ -829,7 +1400,13 @@
   },
   "3453-3466": {
    "by": "claude (read titles and PR descriptions, not full diffs)",
+   "checked": "PR titles and descriptions; diffs not read",
    "date": "2026-09-28",
+   "evidence": "metadata",
+   "links": [
+    "https://github.com/Graphify-Labs/graphify/pull/3453",
+    "https://github.com/Graphify-Labs/graphify/pull/3466"
+   ],
    "note": "",
    "prs": [
     3453,
@@ -839,7 +1416,13 @@
   },
   "3512-3521": {
    "by": "claude (read titles and PR descriptions, not full diffs)",
+   "checked": "PR titles and descriptions; diffs not read",
    "date": "2026-09-28",
+   "evidence": "metadata",
+   "links": [
+    "https://github.com/Graphify-Labs/graphify/pull/3521",
+    "https://github.com/Graphify-Labs/graphify/pull/3512"
+   ],
    "note": "already done in a closed PR",
    "prs": [
     3521,
@@ -849,7 +1432,13 @@
   },
   "3676-3735": {
    "by": "claude (read titles and PR descriptions, not full diffs)",
+   "checked": "PR titles and descriptions; diffs not read",
    "date": "2026-09-28",
+   "evidence": "metadata",
+   "links": [
+    "https://github.com/Graphify-Labs/graphify/pull/3676",
+    "https://github.com/Graphify-Labs/graphify/pull/3735"
+   ],
    "note": "already done in a closed PR",
    "prs": [
     3676,
@@ -857,9 +1446,49 @@
    ],
    "verdict": "duplicate"
   },
+  "3788-3893": {
+   "by": "SrijanSriv",
+   "checked": "PR descriptions and the code diff of graphify/cli.py (_run_hook_guard nudge limiting). Tests not run; each diff was read up to its first ~100 lines, and test files were not read.",
+   "date": "2026-09-30",
+   "evidence": "diff",
+   "links": [
+    "https://github.com/Graphify-Labs/graphify/pull/3443/files",
+    "https://github.com/Graphify-Labs/graphify/pull/3788/files",
+    "https://github.com/Graphify-Labs/graphify/pull/3893/files"
+   ],
+   "note": "Competing fixes for the same behavior: the search/read nudge fires on every tool call. #3443 (fixes #3435) caps both nudges at 5 per session; #3788 (fixes #3756) limits only the search nudge to once per session/agent; #3893 says it carries #3443 onto v8 and adds per-agent budgets, citing #3756 too. #3443 and #3893 are the same change (3893 is 3443 plus a follow-up). #3788 differs in policy (once vs cap of 5) and scope. A maintainer should pick one policy; likely #3893 supersedes #3443. (Upgrades the earlier metadata-only record for 3443-3788.)",
+   "prs": [
+    3443,
+    3788,
+    3893
+   ],
+   "verdict": "duplicate"
+  },
+  "3819-3896": {
+   "by": "SrijanSriv",
+   "checked": "PR descriptions and the code diff of graphify/install.py (_OPENCODE_PLUGIN_JS). Tests not run; each diff was read up to its first ~100 lines, and test files were not read.",
+   "date": "2026-09-30",
+   "evidence": "diff",
+   "links": [
+    "https://github.com/Graphify-Labs/graphify/pull/3819/files",
+    "https://github.com/Graphify-Labs/graphify/pull/3896/files"
+   ],
+   "note": "Both make the OpenCode plugin dual v1+v2 in the same file. They disagree on the v2 hook API: #3819 uses ctx.tool.hook(\"execute.before\"), #3896 uses ctx.shell.hook(\"create.before\"), so at most one can be right. #3896 also fixes the bare relative-path registration in opencode.json, which #3819 does not. Maintainer needs to check the OpenCode v2 API before choosing.",
+   "prs": [
+    3819,
+    3896
+   ],
+   "verdict": "duplicate"
+  },
   "397-420": {
    "by": "claude (read titles and PR descriptions, not full diffs)",
+   "checked": "PR titles and descriptions; diffs not read",
    "date": "2026-09-28",
+   "evidence": "metadata",
+   "links": [
+    "https://github.com/Graphify-Labs/graphify/pull/397",
+    "https://github.com/Graphify-Labs/graphify/pull/420"
+   ],
    "note": "",
    "prs": [
     397,
@@ -869,7 +1498,14 @@
   },
   "406-3651": {
    "by": "claude (read titles and PR descriptions, not full diffs)",
+   "checked": "PR titles and descriptions; diffs not read",
    "date": "2026-09-28",
+   "evidence": "metadata",
+   "links": [
+    "https://github.com/Graphify-Labs/graphify/pull/167",
+    "https://github.com/Graphify-Labs/graphify/pull/406",
+    "https://github.com/Graphify-Labs/graphify/pull/3651"
+   ],
    "note": "",
    "prs": [
     167,
@@ -878,9 +1514,32 @@
    ],
    "verdict": "duplicate"
   },
+  "424-1782": {
+   "by": "SrijanSriv",
+   "checked": "PR descriptions and the code diff of graphify/embed.py in both. Tests not run; generated/expected files and the rest of each diff not read.",
+   "date": "2026-09-30",
+   "evidence": "diff",
+   "links": [
+    "https://github.com/Graphify-Labs/graphify/pull/424/files",
+    "https://github.com/Graphify-Labs/graphify/pull/1782/files"
+   ],
+   "note": "Both add a new graphify/embed.py with MiniLM/sentence-transformers, so they collide on the file. Design differs: #424 (base v4, April) adds `semantically_similar_to` INFERRED edges to the graph; #1782 adds an opt-in embeddings sidecar used as a query-ranking signal (plus four other features). Overlap in goal (semantic query); not the same implementation. Only the first ~60 lines of each embed.py were read.",
+   "prs": [
+    424,
+    1782
+   ],
+   "verdict": "not-duplicate"
+  },
   "424-2743": {
    "by": "claude (read titles and PR descriptions, not full diffs)",
+   "checked": "PR titles and descriptions; diffs not read",
    "date": "2026-09-28",
+   "evidence": "metadata",
+   "links": [
+    "https://github.com/Graphify-Labs/graphify/pull/424",
+    "https://github.com/Graphify-Labs/graphify/pull/1782",
+    "https://github.com/Graphify-Labs/graphify/pull/2743"
+   ],
    "note": "#2743 is Docker setup; its 'closes #1' link is unrelated",
    "prs": [
     424,
@@ -891,7 +1550,13 @@
   },
   "494-3623": {
    "by": "claude (read titles and PR descriptions, not full diffs)",
+   "checked": "PR titles and descriptions; diffs not read",
    "date": "2026-09-28",
+   "evidence": "metadata",
+   "links": [
+    "https://github.com/Graphify-Labs/graphify/pull/494",
+    "https://github.com/Graphify-Labs/graphify/pull/3623"
+   ],
    "note": "",
    "prs": [
     494,
@@ -901,7 +1566,13 @@
   },
   "534-611": {
    "by": "claude (read titles and PR descriptions, not full diffs)",
+   "checked": "PR titles and descriptions; diffs not read",
    "date": "2026-09-28",
+   "evidence": "metadata",
+   "links": [
+    "https://github.com/Graphify-Labs/graphify/pull/534",
+    "https://github.com/Graphify-Labs/graphify/pull/611"
+   ],
    "note": "already done in a closed PR",
    "prs": [
     534,
@@ -911,7 +1582,13 @@
   },
   "542-565": {
    "by": "claude (read titles and PR descriptions, not full diffs)",
+   "checked": "PR titles and descriptions; diffs not read",
    "date": "2026-09-28",
+   "evidence": "metadata",
+   "links": [
+    "https://github.com/Graphify-Labs/graphify/pull/542",
+    "https://github.com/Graphify-Labs/graphify/pull/565"
+   ],
    "note": "already done in a closed PR",
    "prs": [
     542,
@@ -921,7 +1598,14 @@
   },
   "707-1367": {
    "by": "claude (read titles and PR descriptions, not full diffs)",
+   "checked": "PR titles and descriptions; diffs not read",
    "date": "2026-09-28",
+   "evidence": "metadata",
+   "links": [
+    "https://github.com/Graphify-Labs/graphify/pull/707",
+    "https://github.com/Graphify-Labs/graphify/pull/1367",
+    "https://github.com/Graphify-Labs/graphify/pull/1874"
+   ],
    "note": "",
    "prs": [
     707,
@@ -932,7 +1616,14 @@
   },
   "707-1874": {
    "by": "claude (read titles and PR descriptions, not full diffs)",
+   "checked": "PR titles and descriptions; diffs not read",
    "date": "2026-09-28",
+   "evidence": "metadata",
+   "links": [
+    "https://github.com/Graphify-Labs/graphify/pull/707",
+    "https://github.com/Graphify-Labs/graphify/pull/1367",
+    "https://github.com/Graphify-Labs/graphify/pull/1874"
+   ],
    "note": "",
    "prs": [
     707,
@@ -943,7 +1634,13 @@
   },
   "720-805": {
    "by": "claude (read titles and PR descriptions, not full diffs)",
+   "checked": "PR titles and descriptions; diffs not read",
    "date": "2026-09-28",
+   "evidence": "metadata",
+   "links": [
+    "https://github.com/Graphify-Labs/graphify/pull/720",
+    "https://github.com/Graphify-Labs/graphify/pull/805"
+   ],
    "note": "",
    "prs": [
     720,
@@ -953,7 +1650,13 @@
   },
   "809-1089": {
    "by": "claude (read titles and PR descriptions, not full diffs)",
+   "checked": "PR titles and descriptions; diffs not read",
    "date": "2026-09-28",
+   "evidence": "metadata",
+   "links": [
+    "https://github.com/Graphify-Labs/graphify/pull/809",
+    "https://github.com/Graphify-Labs/graphify/pull/1089"
+   ],
    "note": "#1089 is #809 re-targeted to v8",
    "prs": [
     809,
@@ -963,7 +1666,14 @@
   },
   "816-2203": {
    "by": "claude (read titles and PR descriptions, not full diffs)",
+   "checked": "PR titles and descriptions; diffs not read",
    "date": "2026-09-28",
+   "evidence": "metadata",
+   "links": [
+    "https://github.com/Graphify-Labs/graphify/pull/816",
+    "https://github.com/Graphify-Labs/graphify/pull/2203",
+    "https://github.com/Graphify-Labs/graphify/pull/3767"
+   ],
    "note": "",
    "prs": [
     816,

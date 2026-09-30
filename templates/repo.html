@@ -68,6 +68,13 @@
   .badge.poss { color: var(--poss); background: var(--poss-soft); }
   .badge.checked { color: var(--ok); background: transparent; border: 1px solid currentColor; }
   .badge.resub { color: var(--resub); background: var(--resub-soft); }
+  .badge.lvl-metadata, .badge.lvl-unrecorded { color: var(--poss); background: var(--poss-soft); }
+  .badge.lvl-diff, .badge.lvl-landed { color: var(--ok); background: transparent; border: 1px solid currentColor; }
+  .prov { font-size: 13px; color: var(--muted); margin: 6px 0; }
+  .prov summary { cursor: pointer; }
+  .prov dl { margin: 6px 0 0; display: grid; grid-template-columns: max-content 1fr; gap: 2px 12px; }
+  .prov dt { color: var(--faint); }
+  .prov dd { margin: 0; overflow-wrap: anywhere; }
   .reasons { font-size: 13px; color: var(--muted); }
   .pr { display: grid; grid-template-columns: 64px 1fr; gap: 2px 10px; padding: 7px 0; border-top: 1px solid var(--border); }
   .pr:first-of-type { border-top: 0; }
@@ -147,7 +154,7 @@
     </ul>
     PRs naming different languages (e.g. PHP vs Scala) are not matched on files alone, since they edit the same extractor files but do different work.
     “Same author” groups are one person submitting twice, not two people duplicating effort.
-    “✓ Checked” means someone read the PRs and confirmed they are the same work (hover the badge to see who, and how); pairs rejected that way are not shown. All verdicts are in <a id="verdicts-link" href="#">verdicts.json</a>.
+    “✓ Checked” means someone read the PRs and confirmed they are the same work (the line under it shows who, when, how deep the review went, what was checked, and the evidence links); pairs rejected that way are not shown. All verdicts are in <a id="verdicts-link" href="#">verdicts.json</a>.
     <p><b>This is a heuristic, not a verdict.</b> Matches come from titles, descriptions and file lists, not from reading the code. Always check before closing anything. Not affiliated with the repo’s maintainers.</p>
   </footer>
 </div>
@@ -224,6 +231,21 @@
     return `Checked by ${c.by}${c.date ? " on " + c.date : ""}${c.note ? ". Note: " + c.note : ""}`;
   }
 
+  // Review provenance, visible on the card: evidence level, reviewer and date up front,
+  // what was checked and the evidence links behind a disclosure.
+  function provenance(pairs) {
+    const c = pairs.find((p) => p.checked)?.checked;
+    if (!c) return "";
+    const level = data.evidenceLevels[c.level] || "Evidence level not recorded";
+    const label = (u) => esc(u.replace(/^https?:\/\/(www\.)?/, ""));
+    return `<details class="prov"><summary><span class="badge lvl-${esc(c.level)}">${esc(level)}</span> by ${esc(c.by)}${c.date ? " · " + esc(c.date) : ""}</summary>
+      <dl>
+        <dt>Checked</dt><dd>${esc(c.what || "not recorded")}</dd>
+        <dt>Evidence</dt><dd>${c.links.map((u) => `<a href="${esc(u)}" target="_blank" rel="noopener">${label(u)}</a>`).join("<br>") || "none linked"}</dd>
+        ${c.note ? `<dt>Note</dt><dd>${esc(c.note)}</dd>` : ""}
+      </dl></details>`;
+  }
+
   // Opens a pre-filled issue on the undupe repo. Only public PR numbers go in the URL.
   function reportUrl(g, reasons, isDuplicate) {
     const nums = g.prs.map((n) => "#" + n).join(", ");
@@ -257,6 +279,7 @@
           ${g.resubmit ? `<span class="badge resub">Same author</span>` : ""}
           <span class="reasons">${esc(reasons.join(" · "))}</span>
         </div>
+        ${g.confirmed ? provenance(g.pairs) : ""}
         ${g.prs.map((n, i) => prRow(n, { first: i === 0 })).join("")}
         ${shared.length ? `<details><summary>Shared files (${shared.length})</summary>${shared.map((f) => `<code>${esc(f)}</code>`).join("")}</details>` : ""}
         <div class="report">
@@ -303,6 +326,7 @@
           ${d.confirmed ? `<span class="badge checked" title="${esc(checkedTitle(d.matches))}">✓ Checked</span>` : ""}
           <span class="reasons">${esc(reasons.join(" · "))}</span>
         </div>
+        ${d.confirmed ? provenance(d.matches) : ""}
         ${prRow(d.pr)}
         <div class="sub-label">Similar closed PR${d.matches.length > 1 ? "s" : ""}</div>
         ${d.matches.map((m) => closedRow(m.b)).join("")}

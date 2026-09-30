@@ -20,7 +20,7 @@ import webbrowser
 from datetime import date
 from pathlib import Path
 
-from build import load_verdicts, pair_key
+from build import EVIDENCE_LEVELS, load_verdicts, pair_key
 from fetch import tracked_repos
 
 
@@ -70,12 +70,23 @@ def main() -> None:
             break
         if ans not in ("d", "n"):
             continue
+        by = input("  reviewer (your name/handle) > ").strip()
+        levels = list(EVIDENCE_LEVELS)
+        print("  evidence level: " + "  ".join(f"[{i}] {k} ({v})" for i, (k, v) in enumerate(EVIDENCE_LEVELS.items(), 1)))
+        pick = input("  level (default 1) > ").strip() or "1"
+        evidence = levels[int(pick) - 1] if pick.isdigit() and 1 <= int(pick) <= len(levels) else levels[0]
+        checked = input("  what did you check? > ").strip()
+        links = input("  evidence links (space-separated URLs, optional) > ").split()
         note = input("  note (optional) > ").strip()
         for p in g["pairs"]:
             verdicts[pair_key(p["a"], p["b"])] = {
                 "verdict": "duplicate" if ans == "d" else "not-duplicate",
                 "prs": g["prs"],
                 "note": note,
+                "by": by,
+                "evidence": evidence,
+                "checked": checked,
+                "links": links or [f"https://github.com/{repo}/pull/{n}" for n in g["prs"]],
                 "date": date.today().isoformat(),
             }
         save()  # after every answer, so quitting never loses work

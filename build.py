@@ -68,9 +68,34 @@ def weighted_overlap(a: set, b: set, weight) -> float:
 
 
 def load_verdicts() -> dict:
-    """verdicts.json: {repo: {"<a>-<b>": {"verdict": "duplicate"|"not-duplicate", ...}}}, written by review.py."""
+    """verdicts.json: {repo: {"<a>-<b>": {"verdict": "duplicate"|"not-duplicate", ...}}}, written by review.py.
+
+    Provenance fields on each record: by, date, evidence (one of EVIDENCE_LEVELS),
+    checked (what was looked at), links (evidence URLs), note.
+    """
     path = Path("verdicts.json")
     return json.load(open(path)) if path.exists() else {}
+
+
+# How deep a review went. Never upgrade a record's level without redoing the review.
+EVIDENCE_LEVELS = {
+    "metadata": "Titles and descriptions read",
+    "diff": "Diffs reviewed",
+    "landed": "Landed behavior verified",
+}
+
+
+def provenance(entry: dict) -> dict:
+    """The review details the site shows next to a checked badge."""
+    links = [u for u in entry.get("links") or [] if str(u).startswith(("https://", "http://"))]
+    return {
+        "by": entry.get("by") or "unrecorded",
+        "date": entry.get("date", ""),
+        "level": entry.get("evidence") if entry.get("evidence") in EVIDENCE_LEVELS else "unrecorded",
+        "what": entry.get("checked", ""),
+        "links": links,
+        "note": entry.get("note", ""),
+    }
 
 
 def pair_key(a: int, b: int) -> str:
@@ -154,7 +179,7 @@ def build(repo: str) -> dict:
             return None  # someone checked it and said no
         pair["confirmed"] = verdict == "duplicate"
         if pair["confirmed"]:
-            pair["checked"] = {"by": entry.get("by", "?"), "date": entry.get("date", ""), "note": entry.get("note", "")}
+            pair["checked"] = provenance(entry)
         pair["high"] = pair["high"] or pair["confirmed"]
         return pair
 
@@ -245,6 +270,7 @@ def build(repo: str) -> dict:
         "undupeRepo": UNDUPE_REPO,
         "generated": datetime.now(timezone.utc).isoformat(timespec="minutes"),
         "base": base,
+        "evidenceLevels": EVIDENCE_LEVELS,
         "stats": {
             "open": n,
             "groups": len(groups),
